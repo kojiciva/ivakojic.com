@@ -1,0 +1,475 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="referrer" content="no-referrer">
+<title>The path I took — The Recursive case task</title>
+<link rel="icon" href="data:,">
+<style>
+  html { -webkit-text-size-adjust: 100%; }
+</style>
+</head>
+<body>
+<style>
+  :root {
+    --paper: #FFFFFF;
+    --card: #F7F9F9;
+    --ink: #0E1417;
+    --ink-soft: #56646A;
+    --ink-faint: #93A0A4;
+    --accent: #12707E;
+    --rule: #E2E7E8;
+    --rule-soft: #EEF1F2;
+    --flag: #A0522D;
+    --serif: "Iowan Old Style", Charter, "Palatino Linotype", Palatino, Georgia, serif;
+    --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, "Roboto Mono", "Courier New", monospace;
+    --measure: 35rem;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --paper: #0C1113; --card: #121A1D; --ink: #E6EDEC; --ink-soft: #91A0A4;
+      --ink-faint: #647377; --accent: #6CC3CE; --rule: #232E32; --rule-soft: #1A2326;
+      --flag: #D08A63;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #0C1113; --card: #121A1D; --ink: #E6EDEC; --ink-soft: #91A0A4;
+    --ink-faint: #647377; --accent: #6CC3CE; --rule: #232E32; --rule-soft: #1A2326;
+    --flag: #D08A63;
+  }
+  :root[data-theme="light"] {
+    --paper: #FFFFFF; --card: #F7F9F9; --ink: #0E1417; --ink-soft: #56646A;
+    --ink-faint: #93A0A4; --accent: #12707E; --rule: #E2E7E8; --rule-soft: #EEF1F2;
+    --flag: #A0522D;
+  }
+
+  * { box-sizing: border-box; }
+  body {
+    background: var(--paper); color: var(--ink); font-family: var(--serif);
+    font-size: 17px; line-height: 1.62; margin: 0; padding: 0 1.5rem 6rem;
+    -webkit-font-smoothing: antialiased;
+  }
+  .wrap { max-width: 62rem; margin: 0 auto; }
+
+  header.masthead { padding: 5rem 0 2.5rem; border-bottom: 1px solid var(--rule); }
+  .eyebrow {
+    font-family: var(--mono); font-size: 0.7rem; letter-spacing: 0.17em;
+    text-transform: uppercase; color: var(--accent); margin: 0 0 1.75rem;
+  }
+  h1 {
+    font-size: clamp(2.4rem, 6vw, 4rem); line-height: 1.02; letter-spacing: -0.027em;
+    font-weight: 400; margin: 0 0 1.5rem; text-wrap: balance;
+  }
+  .byline {
+    font-family: var(--mono); font-size: 0.78rem; color: var(--ink-soft);
+    display: flex; flex-wrap: wrap; gap: 0.4rem 1.4rem; margin: 0 0 2.25rem;
+  }
+  .thesis { max-width: var(--measure); font-size: 1.13rem; margin: 0; }
+  .thesis em { font-style: italic; color: var(--ink-soft); }
+  .namenote {
+    max-width: var(--measure); font-family: var(--mono); font-size: 0.73rem;
+    line-height: 1.6; color: var(--ink-faint); margin: 1.75rem 0 0;
+    padding-left: 0.9rem; border-left: 2px solid var(--rule);
+  }
+
+  section.glance { padding: 3rem 0 0.5rem; }
+  .glance-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr));
+    border-top: 1px solid var(--rule-soft);
+  }
+  .stat { padding: 1.15rem 1.5rem 1.15rem 0; border-bottom: 1px solid var(--rule-soft); }
+  .stat .n {
+    font-family: var(--mono); font-size: 1.65rem; font-variant-numeric: tabular-nums;
+    color: var(--accent); display: block; line-height: 1.1; margin-bottom: 0.3rem;
+  }
+  .stat .n.sm { font-size: 1.02rem; padding-top: 0.5rem; }
+  .stat .l { font-size: 0.86rem; color: var(--ink-soft); line-height: 1.35; display: block; }
+
+  h2 {
+    font-family: var(--mono); font-size: 0.73rem; letter-spacing: 0.18em;
+    text-transform: uppercase; font-weight: 400; color: var(--accent);
+    margin: 4.5rem 0 0; padding-bottom: 0.85rem; border-bottom: 1px solid var(--rule);
+  }
+
+  .entry {
+    display: grid; grid-template-columns: 8.5rem 1fr; gap: 0 2.5rem;
+    padding: 2.1rem 0; border-bottom: 1px solid var(--rule-soft); align-items: start;
+  }
+  .entry.last { border-bottom: none; }
+  .date {
+    font-family: var(--mono); font-size: 0.8rem; font-variant-numeric: tabular-nums;
+    color: var(--ink); padding-top: 0.3rem; position: sticky; top: 1.5rem;
+  }
+  .date .tag {
+    display: block; font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--ink-faint); margin-top: 0.35rem;
+  }
+  .body { max-width: var(--measure); }
+  .body > :first-child { margin-top: 0; }
+  .body > :last-child { margin-bottom: 0; }
+  .body p { margin: 0 0 1rem; }
+  .body h3 { font-size: 1.05rem; font-weight: 600; margin: 0 0 0.7rem; letter-spacing: -0.01em; }
+
+  .people { display: flex; flex-direction: column; gap: 0.9rem; margin: 0 0 1rem; }
+  .person b {
+    font-family: var(--mono); font-size: 0.75rem; font-weight: 500; letter-spacing: 0.02em;
+    color: var(--accent); display: block; margin-bottom: 0.15rem;
+  }
+  .person span { font-size: 0.96rem; color: var(--ink-soft); }
+
+  ul.marks { list-style: none; padding: 0; margin: 0 0 1rem; display: flex; flex-direction: column; gap: 0.9rem; }
+  ul.marks li { padding-left: 1.4rem; position: relative; }
+  ul.marks li::before {
+    content: ""; position: absolute; left: 0; top: 0.62em;
+    width: 0.55rem; height: 1px; background: var(--accent);
+  }
+
+  blockquote {
+    margin: 0 0 1rem; padding: 0 0 0 1.1rem; border-left: 2px solid var(--accent);
+    color: var(--ink-soft); font-size: 0.98rem;
+  }
+
+  .moment {
+    background: var(--card); border: 1px solid var(--rule);
+    padding: 2rem 2rem 1.6rem; margin: 2.4rem 0 0;
+  }
+  .moment .kicker {
+    font-family: var(--mono); font-size: 0.67rem; letter-spacing: 0.17em;
+    text-transform: uppercase; color: var(--flag); margin: 0 0 1rem;
+  }
+  .moment h3 { font-size: 1.32rem; font-weight: 400; margin: 0 0 1.1rem; letter-spacing: -0.015em; line-height: 1.28; }
+
+  table.targets { width: 100%; border-collapse: collapse; font-size: 0.93rem; margin: 0; }
+  table.targets th {
+    font-family: var(--mono); font-size: 0.66rem; letter-spacing: 0.13em; text-transform: uppercase;
+    color: var(--ink-faint); font-weight: 400; text-align: left;
+    padding: 0 1.2rem 0.6rem 0; border-bottom: 1px solid var(--rule);
+  }
+  table.targets td {
+    padding: 0.72rem 1.2rem 0.72rem 0; border-bottom: 1px solid var(--rule-soft);
+    vertical-align: top; color: var(--ink-soft);
+  }
+  table.targets td.nm { color: var(--ink); white-space: nowrap; }
+  table.targets td.rl { font-size: 0.87rem; }
+  .tablewrap { overflow-x: auto; padding-top: 1.6rem; }
+
+  .markets { display: flex; flex-direction: column; gap: 1.4rem; padding: 2.4rem 0 0; }
+  .market { display: grid; grid-template-columns: 8.5rem 1fr; gap: 0 2.5rem; align-items: baseline; }
+  .market .m {
+    font-family: var(--mono); font-size: 0.75rem; letter-spacing: 0.13em;
+    text-transform: uppercase; color: var(--accent);
+  }
+  .market .o { font-size: 0.98rem; color: var(--ink-soft); max-width: var(--measure); }
+
+  footer {
+    margin-top: 5rem; padding-top: 1.5rem; border-top: 1px solid var(--rule);
+    font-family: var(--mono); font-size: 0.73rem; color: var(--ink-faint);
+    display: flex; flex-wrap: wrap; gap: 0.4rem 1.2rem;
+  }
+
+  @media (max-width: 760px) {
+    body { font-size: 16px; padding: 0 1.15rem 4rem; }
+    header.masthead { padding-top: 3rem; }
+    .entry, .market { grid-template-columns: 1fr; gap: 0.6rem; }
+    .date { position: static; padding-top: 0; }
+    .date .tag { display: inline; margin-left: 0.6rem; }
+    .moment { padding: 1.4rem 1.25rem 1.1rem; }
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="masthead">
+    <p class="eyebrow">The Recursive &middot; case task</p>
+    <h1>The path I took</h1>
+    <div class="byline">
+      <span>Iva Kojić</span><span>23 June to 21 July 2026</span><span>22 days</span>
+    </div>
+    <p class="thesis">
+      The brief asked me to show how I got there. <em>The intro, the thread, the angle, the path you
+      took.</em> I sent the outcome. This is the path.
+    </p>
+    <p class="namenote">
+      On names: surnames are shortened to an initial. Two people are described by role only, at their request.
+    </p>
+  </header>
+
+  <section class="glance">
+    <div class="glance-grid">
+      <div class="stat"><span class="n">31</span><span class="l">People approached in total</span></div>
+      <div class="stat"><span class="n">11</span><span class="l">Warm channels opened, before any list</span></div>
+      <div class="stat"><span class="n">20</span><span class="l">Emails sent across the task</span></div>
+      <div class="stat"><span class="n">9</span><span class="l">LinkedIn approaches</span></div>
+      <div class="stat"><span class="n">50 → 17 → 5</span><span class="l">Leads pulled from a paid CRM, qualified down, then sent</span></div>
+      <div class="stat"><span class="n">3</span><span class="l">Interview commitments obtained</span></div>
+      <div class="stat"><span class="n">1</span><span class="l">Commitment I turned down myself, off brief</span></div>
+      <div class="stat"><span class="n sm">UAE · DE · AT</span><span class="l">Markets worked in parallel</span></div>
+    </div>
+  </section>
+
+  <h2>Week one &middot; warm network first</h2>
+
+  <div class="entry">
+    <div class="date">23 June<span class="tag">brief in</span></div>
+    <div class="body">
+      <p>Brief received. I sent back <b>two clarifying questions the same day</b>. Whether the target
+      had to sit inside a large corporate or could be an AI native company at enterprise scale, and
+      whether to approach on behalf of The Recursive or as myself.</p>
+      <p>I wanted the scope fixed before starting.</p>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="date">24 June<span class="tag">8 channels</span></div>
+    <div class="body">
+      <h3>Eight channels opened in a single day</h3>
+      <div class="people">
+        <div class="person"><b>GIZ Serbia</b><span>A personal connection into the German development agency. Full corporate brief written from scratch, explaining The Recursive's three divisions and exactly what profile I needed.</span></div>
+        <div class="person"><b>LMtek, enterprise hardware</b><span>Approached in Serbian. He works the UAE market through distributors.</span></div>
+        <div class="person"><b>SP Jain School of Global Management</b><span>Email plus LinkedIn. The address bounced, domain not found.</span></div>
+        <div class="person"><b>Siemens Austria</b><span>Direct ask for an internal introduction to their AI side.</span></div>
+        <div class="person"><b>weXelerate</b><span>A former colleague suggested ProSiebenSat.1. Wrong sector. I clarified the brief and let it go.</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="date">25 June<span class="tag">the anchor</span></div>
+    <div class="body">
+      <p><b>Dr Marwan A., CEO of AI at Dubai Department of Economy and Tourism.</b> LinkedIn
+      message at 09:50.</p>
+      <p>Not a cold approach. We met in 2023 after his talk at the Tomorrow Conference in Belgrade,
+      and he answered warmly at the time.</p>
+      <p>When LinkedIn went quiet, I asked <b>the friend who had moderated that conference</b> whether
+      he could reach him. He gave me Marwan's private number, on one condition: that I never say where it came from.</p>
+      <p>I did not say then, and I am not saying here.</p>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="date">26 June<span class="tag">status</span></div>
+    <div class="body">
+      <p>You confirmed Marwan was a good choice and advised framing it as a chance for him to present
+      Dubai's AI ecosystem to European investors, relationship first.</p>
+      <p>The LMtek contact came back. He could not help in the UAE, so he <b>personally wrote to the
+      owner of a German company on my behalf</b>.</p>
+      <p>I also sent you a status update:</p>
+      <blockquote>I have already reached out to Marwan on LinkedIn. I am holding off on pushing
+      harder for now, since my contact mentioned he has been quite low key lately and I do not want to
+      overstep. My plan: if I do not hear back by Monday, I will send a short informal note on
+      WhatsApp, and if it is still quiet, I will not push further. In parallel, I am working a few
+      other angles so we always have options.</blockquote>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="date">29 June<span class="tag">the decline</span></div>
+    <div class="body">
+      <p>Marwan still silent. I escalated by channel. <b>LinkedIn, then a phone
+      call, then a short WhatsApp message.</b> In the Gulf a voice builds trust faster than another
+      written message.</p>
+      <h3>The GIZ chain, four people deep</h3>
+      <p>My GIZ contact <b>called me</b> rather than replying. His read was direct: the first email
+      was good, but he could not forward it internally because it came from a private domain, and I
+      would know how that looks. So he did the next best thing and went looking for someone in
+      Germany instead.</p>
+      <p>He passed me to <b>Nikola B.</b>, a business consultant at SBP Management in Berlin. I connected with him on LinkedIn, and he in turn put the brief in front of a CEO.</p>
+      <p>Four people, three days, from a personal connection in Belgrade to a founder's inbox in
+      Berlin.</p>
+
+      <div class="moment">
+        <p class="kicker">A CEO said yes, and I turned it down in 44 minutes</p>
+        <h3>Julian S., Geschäftsführer and CEO of Fuxam GmbH, Berlin</h3>
+        <p>At 15:05 he wrote:</p>
+        <blockquote>I would be happy to help you with your inquiry and would be pleased to agree to
+        an interview. Please send me all the necessary information again and suggest a date and time.</blockquote>
+        <p>A confirmed CEO interview, four days before the original deadline, with nothing else
+        landed yet.</p>
+        <p><b>At 15:49 I declined it.</b> The company is growth stage, and the brief said a
+        serious enterprise. Taking it would have filled the deliverable and missed the point.</p>
+        <blockquote>To be transparent: for this particular piece I am focused on leaders within
+        larger enterprises, so I think there may have been a small misunderstanding. Fuxam would not
+        be the right fit for this specific format at the moment. That said, I would genuinely love to
+        stay in touch. I think you would be a fantastic fit for our coverage of high growth startups,
+        especially seed stage companies and the investment landscape around them.</blockquote>
+        <p>He replied eight minutes later: <b>"No problem, anytime!"</b></p>
+        
+      </div>
+      <p style="margin-top:1.4rem;">I went back to GIZ afterwards and asked them to keep looking.
+      The answer was honest: at enterprise level, in that window, it would be hard.</p>
+    </div>
+  </div>
+
+  <h2>Week two &middot; the warm side collapses</h2>
+
+  <div class="entry">
+    <div class="date">30 June<span class="tag">three losses</span></div>
+    <div class="body">
+      <ul class="marks">
+        <li><b>The German route closed.</b> The owner my contact had written to was on a cruise and
+        unreachable.</li>
+        <li><b>GIZ closed.</b> My contact told me it was the wrong moment to ask, for PR reasons on
+        their side. I dropped the route.</li>
+        <li><b>Marwan silent</b> across three channels. I stopped. A fourth attempt on a low profile
+        Gulf executive damages the relationship.</li>
+      </ul>
+      <p>I sent the LMtek contact a warm thank you anyway, because he had spent real effort on
+      something that did not work out.</p>
+      <p><b>Decision the same day.</b> The warm network was out of moves. Rather than keep working
+      dead threads, I switched to building a cold list properly.</p>
+
+      <h3>The funnel</h3>
+      <ul class="marks">
+        <li><b>I paid for CRM access</b> and pulled a filtered export
+        of <b>50 qualified leads</b>. Filters: Chief AI Officer, CDO, CIO, CTO, Head of AI, at
+        companies over 500 people, in Germany or the UAE, across finance, automotive, defence,
+        energy, retail, telecoms and cybersecurity.</li>
+        <li><b>50 became 17.</b> I read them individually and kept the ones who own AI transformation.</li>
+        <li><b>17 became 5 for the first send.</b></li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="date">1 July<span class="tag">heaviest day</span></div>
+    <div class="body">
+      <h3>Eleven formal emails</h3>
+      <p>Apollo used to verify ten enterprise addresses. Subject line <em>"The Recursive, an interview
+      invitation"</em>. Formal European register, first name opening, hyperlinked rather than raw
+      URLs, one fully rewritten for a contact I already knew.</p>
+      <p><b>Then the task turned.</b> Nikola J., ex McKinsey, working between Dubai and Belgrade, answered my email the same day with two leads. One was <b>Carlo N., Chief Digital
+      Officer at Emirates Global Aluminium</b>. First CDO in the company's history, twenty years at
+      Airbus before that, which makes him a Europe to Gulf bridge rather than only a Gulf contact.</p>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="date">2 July<span class="tag">first yes</span></div>
+    <div class="body">
+      <p><b>Naveen K., E.ON Digital Technology</b>, on LinkedIn:</p>
+      <blockquote>In principle yes. But would like to understand further, maybe we get on a short call.</blockquote>
+      <p><b>Hamed A., Chief AI Officer at the Central Bank of the UAE</b>, accepted the
+      connection the same day.</p>
+      <p>You asked whether I needed more time. I said yes, a few days would help because two leads
+      were warming. Deadline moved from 3 to 10 July. <b>I asked in advance.</b></p>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="date">3 July<span class="tag">two tracks</span></div>
+    <div class="body">
+      <p>Full pitch sent to Hamed Areidat. Second message to Nikola J., extending his window without pressure, asking for either a written yes from Carlo or permission to write to Carlo myself.
+      Two tracks in parallel.</p>
+      <p>Naveen was confirmed but not C-level, Carlo and Hamed were pending, so I waited until there was something settled to report.</p>
+    </div>
+  </div>
+
+  <h2>Week three &middot; the anchor and the correction</h2>
+
+  <div class="entry">
+    <div class="date">5 to 6 July<span class="tag">anchor lands</span></div>
+    <div class="body">
+      <p>Carlo's one pager written, then rewritten with a <em>How I reached him</em> section added,
+      because the brief tested sourcing and not just naming.</p>
+      <p>I also prepared a fallback package in advance, to be used only if both Carlo and Hamed stayed
+      silent.</p>
+      <p><b>6 July, Nikola J. came back: Carlo is open to the interview.</b> A C-level yes at a sovereign backed industrial group, sourced through a warm intro opened five days earlier.</p>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="date">7 to 10 July<span class="tag">delivery</span></div>
+    <div class="body">
+      <p>The direct email to Carlo bounced. EGA blocks private domains as corporate security policy.
+      I forwarded it to you the same day with the context.</p>
+      <p>On 9 July I approached him again on his direct address <b>with you copied in</b>.</p>
+      <p>Deliverable submitted 10 July.</p>
+    </div>
+  </div>
+
+  <div class="entry">
+    <div class="date">16 July<span class="tag">it worked</span></div>
+    <div class="body">
+      <p>Marwan came back, three weeks after my last message.</p>
+      <blockquote>Hi Iva, Email me on marwan@dubaidet.ae</blockquote>
+      <p>The relationship first approach worked. Just outside the deadline.</p>
+    </div>
+  </div>
+
+  <div class="entry last">
+    <div class="date">21 July<span class="tag">handed over</span></div>
+    <div class="body">
+      <h3>What I handed over</h3>
+      <p>At the leadership call I gave you Marwan Alzarouni directly, and suggested you write to him
+      at Dubai DET using my name, because a business domain gets through where a private one may not.</p>
+      <p>I did that before knowing the outcome of the process.</p>
+    </div>
+  </div>
+
+  <h2>Who was approached, by market</h2>
+
+  <div class="tablewrap">
+    <table class="targets">
+      <thead>
+        <tr><th>Person</th><th>Role and organisation</th><th>Market</th><th>Outcome</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="nm">Dr Marwan A.</td><td class="rl">CEO of AI, Dubai Department of Economy and Tourism</td><td>UAE</td><td>Re-engaged, handed to The Recursive</td></tr>
+        <tr><td class="nm">Carlo N.</td><td class="rl">Chief Digital Officer, Emirates Global Aluminium</td><td>UAE</td><td><b>Agreed to interview</b></td></tr>
+        <tr><td class="nm">Hamed A.</td><td class="rl">Chief AI Officer, Central Bank of the UAE</td><td>UAE</td><td>Connected, full pitch sent</td></tr>
+        <tr><td class="nm">Aidan M.</td><td class="rl">Mubadala</td><td>UAE</td><td>Emailed</td></tr>
+        <tr><td class="nm">Xi L.</td><td class="rl">Mashreq</td><td>UAE</td><td>Emailed</td></tr>
+        <tr><td class="nm">Aref A.</td><td class="rl">Al Hilal Bank</td><td>UAE</td><td>Emailed</td></tr>
+        <tr><td class="nm">Andrew S.</td><td class="rl">Bank al Etihad</td><td>UAE</td><td>Emailed</td></tr>
+        <tr><td class="nm">Richard M.</td><td class="rl">Landmark Group</td><td>UAE</td><td>Emailed</td></tr>
+        <tr><td class="nm">Suaad S.</td><td class="rl">Chief AI Officer track</td><td>UAE</td><td>LinkedIn</td></tr>
+        <tr><td class="nm">Balqis B.</td><td class="rl">Chief AI Officer track</td><td>UAE</td><td>LinkedIn</td></tr>
+        <tr><td class="nm">Naveen K.</td><td class="rl">Global Lead Architect, Data and AI on Cloud, E.ON Digital Technology</td><td>Germany</td><td><b>Agreed in principle</b></td></tr>
+        <tr><td class="nm">Julian S.</td><td class="rl">Geschäftsführer and CEO, Fuxam GmbH, Berlin</td><td>Germany</td><td><b>Agreed, declined by me as off brief</b></td></tr>
+        <tr><td class="nm">Nikola B.</td><td class="rl">Business consultant, SBP Management, Berlin</td><td>Germany</td><td>Referral chain, produced the CEO</td></tr>
+        <tr><td class="nm">Andreas R.</td><td class="rl">BMW Group</td><td>Germany</td><td>Emailed</td></tr>
+        <tr><td class="nm">Vincent G.</td><td class="rl">Thales</td><td>Germany</td><td>Emailed</td></tr>
+        <tr><td class="nm">Thomas J.</td><td class="rl">Orange Cyberdefense</td><td>Germany</td><td>Emailed</td></tr>
+        <tr><td class="nm">Gabriel M.</td><td class="rl">Giesecke+Devrient</td><td>Germany</td><td>Emailed</td></tr>
+        <tr><td class="nm">Steven A.</td><td class="rl">ALD Automotive</td><td>Germany</td><td>Emailed</td></tr>
+        <tr><td class="nm">Timo C.</td><td class="rl">Chief AI Officer track</td><td>Germany</td><td>LinkedIn</td></tr>
+        <tr><td class="nm">Karlheinz B.</td><td class="rl">Chief AI Officer track</td><td>Germany</td><td>LinkedIn</td></tr>
+        <tr><td class="nm">Shameek K.</td><td class="rl">Chief AI Officer track</td><td>Germany</td><td>LinkedIn</td></tr>
+        <tr><td class="nm">Vladislavs M.</td><td class="rl">Chief AI Officer track</td><td>Germany</td><td>LinkedIn</td></tr>
+        <tr><td class="nm">Andreas M.</td><td class="rl">Infineon</td><td>Austria, for Germany</td><td>Warm reconnect, personalised</td></tr>
+        <tr><td class="nm">Maximilian S.</td><td class="rl">Elevator Ventures</td><td>Austria</td><td>Not contacted, wrong country</td></tr>
+        <tr><td class="nm">Jakob K.</td><td class="rl">MM Group</td><td>Austria</td><td>Not contacted, wrong country</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2>Three markets, at the same time</h2>
+
+  <div class="markets">
+    <div class="market">
+      <div class="m">UAE</div>
+      <div class="o">Dubai Department of Economy and Tourism, Central Bank of the UAE, Emirates Global
+      Aluminium, Mubadala, Mashreq, Al Hilal, Bank al Etihad, Landmark</div>
+    </div>
+    <div class="market">
+      <div class="m">Germany</div>
+      <div class="o">E.ON, BMW, Thales, Orange Cyberdefense, Giesecke+Devrient, ALD, Fuxam, GIZ, SBP
+      Management</div>
+    </div>
+    <div class="market">
+      <div class="m">Austria</div>
+      <div class="o">weXelerate network, Siemens Austria, Infineon. Worked as a route into Germany,
+      not as a target market</div>
+    </div>
+  </div>
+
+  <footer>
+    <span>Iva Kojić</span><span>kojicciva@gmail.com</span><span>linkedin.com/in/iva-kojic</span>
+  </footer>
+
+</div>
+
+</body>
+</html>
