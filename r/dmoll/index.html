@@ -1,0 +1,344 @@
+<!doctype html>
+<html lang="sr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0A0A0B">
+<meta name="robots" content="noindex,nofollow,noarchive,nosnippet">
+<title>Restoran D-moll · Sastavite svoju proslavu</title>
+<meta name="description" content="Izaberite tip proslave, broj gostiju i meni, i odmah vidite okvirnu cenu po gostu.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<!-- Cormorant Garamond za naslove i cene, Jost za sve što se čita i klika. -->
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Jost:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════════════════
+   D-moll · kalkulator proslave — DEMO
+   Pravljeno za telefon. Link stoji u Instagram bio-u.
+   Jedno pitanje po ekranu, veliko dugme, nemoguće se izgubiti.
+   Slike su za sada prazna mesta, dolaze od klijenta.
+   ═══════════════════════════════════════════════════════════════════ */
+:root{
+  --crno:#0A0A0B; --crno2:#121214; --crno3:#191A1D;
+  --zlato:#C8A96E; --zlato2:#E7D3AA; --zlato-mek:rgba(200,169,110,.11);
+  --tekst:#F5F2EC; --mek:#8F8B84; --linija:#232327;
+  --naslov:"Cormorant Garamond",Georgia,serif;                 /* naslovi, marka, cene */
+  --telo:"Jost",-apple-system,"Segoe UI",sans-serif;           /* sve što se čita i klika */
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{margin:0;background:var(--crno);color:var(--tekst);font-family:var(--telo);
+     font-size:16px;line-height:1.65;font-weight:300;letter-spacing:.005em;overflow-x:hidden;
+     -webkit-font-smoothing:antialiased}
+
+.app{min-height:100dvh;display:flex;flex-direction:column;max-width:520px;margin:0 auto}
+
+/* ── vrh: nazad + napredak ── */
+.vrh{display:flex;align-items:center;gap:14px;padding:16px 20px 0;min-height:52px}
+.nazad{background:none;border:0;color:var(--mek);font:inherit;font-size:22px;
+       line-height:1;padding:4px 8px 4px 0;cursor:pointer;visibility:hidden}
+.nazad.vidi{visibility:visible}
+.napredak{flex:1;height:2px;background:var(--linija);border-radius:2px;overflow:hidden}
+.napredak i{display:block;height:100%;background:var(--zlato);width:0;opacity:.85;
+            transition:width .35s cubic-bezier(.4,0,.2,1)}
+.brojac{font-size:11px;color:var(--mek);letter-spacing:.1em;font-variant-numeric:tabular-nums}
+
+/* ── telo ── */
+.telo{flex:1;padding:22px 20px 0;display:flex;flex-direction:column}
+.ekran{display:none;animation:ulaz .32s cubic-bezier(.2,.7,.3,1)}
+.ekran.on{display:flex;flex-direction:column;flex:1}
+@keyframes ulaz{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+
+.korak{font-family:var(--telo);font-size:9.5px;font-weight:400;letter-spacing:.34em;
+       text-transform:uppercase;color:var(--zlato);margin-bottom:16px;opacity:.9}
+h1{font-family:var(--naslov);font-size:33px;font-weight:300;margin:0 0 10px;
+   letter-spacing:.005em;line-height:1.2}
+.pod{color:var(--mek);font-size:13.5px;font-weight:300;margin:0 0 28px;line-height:1.65}
+
+/* ── opcije ── */
+.lista{display:flex;flex-direction:column;gap:10px}
+.opt{display:flex;align-items:center;gap:14px;background:var(--crno2);border:1px solid var(--linija);
+     border-radius:2px;padding:0 18px 0 0;cursor:pointer;overflow:hidden;
+     transition:border-color .2s,background .2s;min-height:80px}
+.opt:active{transform:scale(.99)}
+.opt.on{border-color:var(--zlato);background:var(--zlato-mek)}
+.sl{width:80px;height:80px;flex:none;background:var(--crno3);display:grid;place-items:center;
+    border-right:1px solid var(--linija)}
+.sl span{font-family:var(--naslov);font-size:8px;font-weight:400;letter-spacing:.2em;
+         color:#4A4A54;text-transform:uppercase;text-align:center;line-height:1.3}
+.opt.on .sl{border-right-color:rgba(200,169,110,.3)}
+.txt{flex:1;padding:12px 0;min-width:0}
+.txt b{display:block;font-family:var(--telo);font-weight:400;font-size:15px;letter-spacing:.01em}
+.txt small{display:block;color:var(--mek);font-size:12.5px;font-weight:300;margin-top:3px}
+.cn{font-family:var(--naslov);font-weight:400;color:var(--zlato);font-size:17px;
+    letter-spacing:.02em;white-space:nowrap;padding-left:6px}
+.opt.on .cn{color:var(--zlato2)}
+
+.chips{display:flex;flex-wrap:wrap;gap:10px}
+.chip{flex:1 1 calc(50% - 5px);background:var(--crno2);border:1px solid var(--linija);color:var(--tekst);
+      border-radius:2px;padding:22px 12px;font-family:var(--telo);font-weight:300;font-size:14px;
+      letter-spacing:.03em;cursor:pointer;transition:border-color .2s,background .2s}
+.chip.on{border-color:var(--zlato);background:var(--zlato-mek);color:var(--zlato2)}
+
+.preskoci{background:none;border:0;color:var(--mek);font:inherit;font-size:14px;
+          text-decoration:underline;text-underline-offset:4px;padding:16px;cursor:pointer;align-self:center}
+
+/* ── dno ── */
+.dno{position:sticky;bottom:0;background:linear-gradient(to top,var(--crno) 62%,transparent);
+     padding:18px 20px calc(20px + env(safe-area-inset-bottom));margin-top:auto}
+.dugme{width:100%;background:var(--zlato);color:#15120D;border:0;border-radius:2px;padding:19px;
+       font-family:var(--telo);font-weight:400;font-size:12px;letter-spacing:.22em;
+       text-transform:uppercase;cursor:pointer}
+.dugme:disabled{opacity:.28;cursor:not-allowed}
+.dugme.obris{background:none;border:1px solid var(--linija);color:var(--mek);font-weight:300;
+             letter-spacing:.06em;text-transform:none;font-size:13px;margin-top:12px}
+
+/* ── uvod ── */
+.uvod{text-align:center;padding-top:9vh}
+.marka{font-family:var(--naslov);font-size:34px;font-weight:300;letter-spacing:.2em;
+       text-transform:uppercase;margin:0;line-height:1.25}
+.marka b{color:var(--zlato);font-weight:400}
+.slogan{font-family:var(--naslov);font-style:italic;font-weight:300;color:var(--zlato);
+        font-size:17px;letter-spacing:.05em;margin:12px 0 0}
+.hero{margin:34px 0;height:210px;background:var(--crno2);border:1px solid var(--linija);
+      border-radius:2px;display:grid;place-items:center}
+.hero span{font-family:var(--naslov);font-size:9px;font-weight:400;letter-spacing:.26em;
+           color:#4A4A54;text-transform:uppercase}
+
+/* ── rezultat ── */
+.cena-box{background:var(--crno2);border:1px solid rgba(200,169,110,.45);border-radius:2px;
+          padding:34px 22px;text-align:center;margin-bottom:22px}
+.cena-lbl{font-family:var(--telo);font-size:9.5px;font-weight:400;letter-spacing:.34em;
+          text-transform:uppercase;color:var(--mek)}
+.cena{font-family:var(--naslov);font-weight:300;font-size:40px;color:var(--zlato);
+      letter-spacing:.01em;line-height:1.2;margin:14px 0 2px}
+.cena small{font-size:15px;color:var(--mek);font-family:var(--telo)}
+.cena-uk{font-size:13.5px;color:var(--mek);margin-top:8px}
+
+.rekap{background:none;border:1px solid var(--linija);border-radius:2px;
+       padding:6px 20px;margin-bottom:22px}
+.r{display:flex;justify-content:space-between;gap:14px;padding:11px 0;font-size:14px;
+   border-bottom:1px solid var(--crno3)}
+.r:last-child{border-bottom:0}
+.r span{color:var(--mek)}
+.r b{font-family:var(--telo);font-weight:400;font-size:13.5px;letter-spacing:.01em;text-align:right}
+
+.mali{color:var(--mek);font-size:12.5px;line-height:1.65;text-align:center;padding:4px 0 18px}
+.mali b{color:var(--zlato);font-weight:400}
+footer{text-align:center;padding:22px 20px 34px;color:#5C5C66;font-size:11.5px;line-height:1.7}
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <div class="vrh">
+    <button class="nazad" id="nazad" aria-label="Nazad">‹</button>
+    <div class="napredak"><i id="traka"></i></div>
+    <div class="brojac" id="brojac"></div>
+  </div>
+
+  <div class="telo" id="telo"></div>
+
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════════
+   SVE ŠTO SE MENJA JE OVDE.
+   ⚠️ DEMO: cene su izmišljene dok D-moll ne pošalje tabelu.
+   ═══════════════════════════════════════════════════════════════════ */
+
+const KONTAKT = {
+  telefon: "+381 (0)69 3360563",
+  telLink: "+381693360563",
+  mejl:    "restoran.dmoll@gmail.com",
+};
+
+// Raspon: donja granica je zbir, gornja je zbir uvećan za ovoliko.
+const RASPON = 0.15;
+
+const PITANJA = [
+  { id:"tip", korak:"Proslava", naslov:"Kakva je proslava?", pod:"Izaberite jedno.",
+    vrsta:"chips", obavezno:true,
+    opcije:[{n:"Svadba"},{n:"Punoletstvo"},{n:"Krštenje"},{n:"Rođendan"},
+            {n:"Godišnjica"},{n:"Poslovna proslava"}] },
+
+  { id:"gosti", korak:"Gosti", naslov:"Koliko gostiju očekujete?", pod:"Okvirno je sasvim dovoljno.",
+    vrsta:"chips", obavezno:true,
+    opcije:[{n:"do 50", broj:50},{n:"50 do 100", broj:100},
+            {n:"100 do 150", broj:150},{n:"preko 150", broj:200}] },
+
+  { id:"predjelo", korak:"Predjelo", naslov:"Izaberite predjelo", pod:"Cene su po gostu.",
+    vrsta:"lista", obavezno:true, slika:true,
+    opcije:[{n:"Predjelo 1", o:"Sitne pite i sirevi", c:300},
+            {n:"Predjelo 2", o:"Mešana hladna plata", c:350},
+            {n:"Predjelo 3", o:"Proširena plata sa suhomesnatim", c:400}] },
+
+  { id:"kackavalj", korak:"Dodatak", naslov:"Pohovani kačkavalj?", pod:"Služi se posle predjela.",
+    vrsta:"chips", obavezno:true,
+    opcije:[{n:"Da", c:150},{n:"Ne", c:0}] },
+
+  { id:"srednje", korak:"Drugi kurs", naslov:"Čorba ili sarma?", pod:"Ovaj kurs možete i preskočiti.",
+    vrsta:"lista", obavezno:false, preskoci:true, slika:true,
+    opcije:[{n:"Čorba", o:"Domaća goveđa", c:200},
+            {n:"Sarma", o:"Klasična, sa mesom", c:280}] },
+
+  { id:"glavno", korak:"Glavno jelo", naslov:"Izaberite glavno jelo", pod:"Roštilj sa priloga.",
+    vrsta:"lista", obavezno:true, slika:true,
+    opcije:[{n:"Mešano meso 1", o:"Standardna postavka", c:800},
+            {n:"Mešano meso 2", o:"Proširena, sa dodacima", c:1000}] },
+
+  { id:"desert", korak:"Desert", naslov:"Želite li desert?", pod:"",
+    vrsta:"chips", obavezno:true,
+    opcije:[{n:"Da", c:250},{n:"Ne", c:0}] },
+
+  { id:"dekor", korak:"Dekoracija", naslov:"Dekoracija sale", pod:"Cveće, stolnjaci i aranžmani.",
+    vrsta:"lista", obavezno:true, slika:true,
+    opcije:[{n:"Bez dekoracije", o:"", c:0},
+            {n:"Osnovna", o:"Stolnjaci i aranžmani na stolovima", c:200},
+            {n:"Puna", o:"Sala, sto mladenaca i cveće", c:450}] },
+];
+
+/* ═══════════════ ispod se ne dira ═══════════════ */
+
+const izbor = {};
+let i = -1;                                   // -1 = uvodni ekran
+const telo = document.getElementById("telo");
+const din  = n => n.toLocaleString("sr-RS");
+
+function racun(){
+  let zbir = 0;
+  PITANJA.forEach(p => {
+    const o = izbor[p.id];
+    if (o && o.c) zbir += o.c;
+  });
+  const g = izbor.gosti ? izbor.gosti.broj : null;
+  const donja = Math.round(zbir / 50) * 50;
+  const gornja = Math.round(zbir * (1 + RASPON) / 50) * 50;
+  return { zbir, donja, gornja, gosti:g };
+}
+
+function slikaBox(){ return `<div class="sl"><span>Foto</span></div>`; }
+
+function crtaj(){
+  const nazad = document.getElementById("nazad");
+  const traka = document.getElementById("traka");
+  const broj  = document.getElementById("brojac");
+
+  nazad.classList.toggle("vidi", i >= 0);
+  traka.style.width = i < 0 ? "0%" : `${((i + 1) / (PITANJA.length + 1)) * 100}%`;
+  broj.textContent  = i < 0 ? "" : (i < PITANJA.length ? `${i + 1}/${PITANJA.length}` : "");
+
+  // ── uvod ──
+  if (i < 0){
+    telo.innerHTML = `
+      <div class="ekran on">
+        <div class="uvod">
+          <p class="marka">Restoran <b>D-moll</b></p>
+          <p class="slogan">Simfonija dobrih ukusa</p>
+          <div class="hero"><span>Fotografija sale</span></div>
+          <h1 style="font-size:27px;letter-spacing:.01em">Sastavite svoju proslavu</h1>
+          <p class="pod" style="margin-bottom:0">Odgovorite na nekoliko pitanja
+          i odmah vidite okvirnu cenu po gostu. Traje minut, bez obaveze.</p>
+        </div>
+        <div class="dno"><button class="dugme" id="dalje">Počnite</button></div>
+      </div>`;
+    document.getElementById("dalje").onclick = () => { i = 0; crtaj(); };
+    return;
+  }
+
+  // ── rezultat ──
+  if (i >= PITANJA.length){ rezultat(); return; }
+
+  // ── pitanje ──
+  const p = PITANJA[i];
+  const izabrano = izbor[p.id];
+
+  const telaOpcija = p.vrsta === "chips"
+    ? `<div class="chips">${p.opcije.map((o,k) =>
+        `<button type="button" class="chip${izabrano && izabrano.n === o.n ? " on" : ""}" data-k="${k}">
+           ${o.n}${o.c ? `<div style="font-family:var(--naslov);color:var(--zlato);font-size:13px;margin-top:5px">+${din(o.c)}</div>` : ""}
+         </button>`).join("")}</div>`
+    : `<div class="lista">${p.opcije.map((o,k) =>
+        `<div class="opt${izabrano && izabrano.n === o.n ? " on" : ""}" data-k="${k}">
+           ${p.slika ? slikaBox() : ""}
+           <div class="txt"><b>${o.n}</b>${o.o ? `<small>${o.o}</small>` : ""}</div>
+           <div class="cn">${o.c ? "+" + din(o.c) : "—"}</div>
+         </div>`).join("")}</div>`;
+
+  telo.innerHTML = `
+    <div class="ekran on">
+      <div class="korak">${p.korak}</div>
+      <h1>${p.naslov}</h1>
+      ${p.pod ? `<p class="pod">${p.pod}</p>` : ""}
+      ${telaOpcija}
+      ${p.preskoci ? `<button class="preskoci" id="skip">Preskočite ovaj kurs</button>` : ""}
+      <div class="dno">
+        <button class="dugme" id="dalje" ${izabrano ? "" : "disabled"}>Dalje</button>
+      </div>
+    </div>`;
+
+  telo.querySelectorAll("[data-k]").forEach(el => {
+    el.onclick = () => {
+      izbor[p.id] = p.opcije[+el.dataset.k];
+      crtaj();
+      setTimeout(() => { i++; crtaj(); }, 220);   // kratka pauza da se vidi izbor
+    };
+  });
+  const skip = document.getElementById("skip");
+  if (skip) skip.onclick = () => { delete izbor[p.id]; i++; crtaj(); };
+  document.getElementById("dalje").onclick = () => { i++; crtaj(); };
+}
+
+function rezultat(){
+  const r = racun();
+  const stavke = PITANJA
+    .filter(p => izbor[p.id])
+    .map(p => `<div class="r"><span>${p.korak}</span><b>${izbor[p.id].n}</b></div>`).join("");
+
+  const sazetak = PITANJA.filter(p => izbor[p.id])
+    .map(p => `${p.korak}: ${izbor[p.id].n}`).join("%0D%0A");
+
+  const telo_mejla =
+    `Poštovani,%0D%0A%0D%0AŽeleo bih ponudu za proslavu.%0D%0A%0D%0A${sazetak}` +
+    `%0D%0A%0D%0AOkvirna cena po gostu: ${din(r.donja)} do ${din(r.gornja)} RSD` +
+    `%0D%0A%0D%0AMoje ime:%0D%0AKontakt telefon:%0D%0AŽeljeni datum:%0D%0ANapomena:%0D%0A`;
+
+  telo.innerHTML = `
+    <div class="ekran on">
+      <div class="korak">Vaša procena</div>
+      <h1>Evo okvirne cene</h1>
+      <p class="pod">Na osnovu onoga što ste izabrali.</p>
+
+      <div class="cena-box">
+        <div class="cena-lbl">Po gostu</div>
+        <div class="cena">${din(r.donja)} do ${din(r.gornja)} <small>RSD</small></div>
+        ${r.gosti ? `<div class="cena-uk">Za ${izbor.gosti.n} gostiju, okvirno
+          ${din(r.donja * r.gosti)} do ${din(r.gornja * r.gosti)} RSD</div>` : ""}
+      </div>
+
+      <div class="rekap">${stavke}</div>
+
+      <p class="mali"><b>Ovo je okvirna procena.</b> Konačnu ponudu dobijate
+      posle kratkog razgovora, jer sve zavisi od datuma i dogovora.</p>
+
+      <div class="dno">
+        <a class="dugme" style="display:block;text-align:center;text-decoration:none"
+           href="tel:${KONTAKT.telLink}">Pozovite nas &nbsp;·&nbsp; ${KONTAKT.telefon}</a>
+        <a class="dugme obris" style="display:block;text-align:center;text-decoration:none"
+           href="mailto:${KONTAKT.mejl}?subject=Upit%20za%20proslavu&body=${telo_mejla}">
+           Niste u mogućnosti da pozovete? Pošaljite upit mejlom</a>
+      </div>
+
+      <footer>
+        Restoran D-moll · Kragujevac<br>
+        ${KONTAKT.telefon} · ${KONTAKT.mejl}
+      </footer>
+    </div>`;
+}
+
+document.getElementById("nazad").onclick = () => { if (i >= 0){ i--; crtaj(); } };
+crtaj();
+</script>
+</body>
+</html>
