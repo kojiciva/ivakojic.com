@@ -1,0 +1,378 @@
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<title>Pojedinci ili firme</title>
+<style>
+  :root{
+    --bg:#15100F;
+    --surface:#1E1715;
+    --card:#261C1A;
+    --border:#392A27;
+    --wine:#6B2D3E;
+    --wine-lift:#8A3B50;
+    --copper:#C77D4F;
+    --copper-lift:#E09666;
+    --tp:#F1E8E2;
+    --ts:#B29C93;
+    --tm:#7C6960;
+    --serif:Georgia,'Times New Roman',serif;
+    --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+    --step:clamp(1rem,4vw,1.5rem);
+  }
+
+  *{box-sizing:border-box}
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--tp);
+    font-family:var(--sans);
+    font-size:16px;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  .wrap{
+    max-width:62rem;
+    margin:0 auto;
+    padding:var(--step) var(--step) 3rem;
+    display:flex;
+    flex-direction:column;
+    gap:1.75rem;
+  }
+
+  /* ---------- header: deliberately small, doors must sit above the fold ---------- */
+  .top{display:flex;flex-direction:column;gap:.35rem;padding-top:.5rem}
+  .name{
+    font-family:var(--serif);
+    font-size:clamp(1.55rem,6vw,2.1rem);
+    line-height:1.1;
+    margin:0;
+    letter-spacing:-.01em;
+    text-wrap:balance;
+  }
+  .tag{margin:0;color:var(--ts);font-size:.95rem;max-width:34ch}
+
+  /* ---------- the two doors ---------- */
+  .doors{display:grid;gap:.85rem}
+  @media(min-width:44rem){.doors{grid-template-columns:1fr 1fr}}
+
+  .door{
+    appearance:none;
+    display:flex;
+    flex-direction:column;
+    align-items:flex-start;
+    gap:.3rem;
+    width:100%;
+    text-align:left;
+    font:inherit;
+    color:var(--tp);
+    background:var(--card);
+    border:1px solid var(--border);
+    border-left:3px solid var(--door-accent);
+    border-radius:3px;
+    padding:1.15rem 1.1rem;
+    cursor:pointer;
+    transition:background .18s ease,border-color .18s ease,transform .18s ease;
+  }
+  .door:hover{background:var(--surface);border-color:var(--door-accent)}
+  .door:active{transform:translateY(1px)}
+  .door:focus-visible{outline:2px solid var(--door-accent);outline-offset:3px}
+  .door[aria-expanded="true"]{background:var(--surface);border-color:var(--door-accent)}
+
+  .door-a{--door-accent:var(--wine-lift)}
+  .door-b{--door-accent:var(--copper)}
+
+  .door-label{
+    font-family:var(--serif);
+    font-size:1.35rem;
+    line-height:1.15;
+  }
+  .door-sub{color:var(--ts);font-size:.9rem}
+  .door-cue{
+    margin-top:.15rem;
+    font-size:.72rem;
+    letter-spacing:.13em;
+    text-transform:uppercase;
+    color:var(--door-accent);
+  }
+
+  /* ---------- panels ---------- */
+  .panel{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-top:2px solid var(--panel-accent);
+    border-radius:3px;
+    padding:1.35rem 1.15rem 1.5rem;
+    display:flex;
+    flex-direction:column;
+    gap:1.1rem;
+  }
+  .panel-a{--panel-accent:var(--wine-lift)}
+  .panel-b{--panel-accent:var(--copper)}
+
+  .panel h2{
+    font-family:var(--serif);
+    font-size:1.25rem;
+    margin:0;
+    line-height:1.25;
+    text-wrap:balance;
+  }
+  .panel p{margin:0;color:var(--ts);font-size:.95rem;max-width:60ch}
+
+  /* proof line: her numbers, not adjectives */
+  .proof{
+    list-style:none;
+    margin:0;
+    padding:0;
+    display:flex;
+    flex-wrap:wrap;
+    gap:.4rem .5rem;
+  }
+  .proof li{
+    font-size:.8rem;
+    color:var(--ts);
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:2px;
+    padding:.3rem .55rem;
+    font-variant-numeric:tabular-nums;
+  }
+  .proof b{color:var(--tp);font-weight:600}
+
+  /* ---------- form ---------- */
+  .q{display:flex;flex-direction:column;gap:.45rem}
+  .q-label{font-size:.95rem;color:var(--tp);line-height:1.35}
+  .q-num{
+    color:var(--copper);
+    font-variant-numeric:tabular-nums;
+    margin-right:.4rem;
+    font-size:.85rem;
+  }
+  input[type="text"],textarea{
+    font:inherit;
+    color:var(--tp);
+    background:var(--bg);
+    border:1px solid var(--border);
+    border-radius:2px;
+    padding:.6rem .65rem;
+    width:100%;
+    resize:vertical;
+  }
+  input[type="text"]:focus,textarea:focus{
+    outline:none;
+    border-color:var(--copper);
+  }
+  .choices{display:flex;flex-direction:column;gap:.4rem}
+  .choice{
+    display:flex;
+    align-items:flex-start;
+    gap:.55rem;
+    padding:.6rem .65rem;
+    background:var(--bg);
+    border:1px solid var(--border);
+    border-radius:2px;
+    cursor:pointer;
+    font-size:.92rem;
+    line-height:1.35;
+  }
+  .choice:hover{border-color:var(--tm)}
+  .choice:has(input:checked){border-color:var(--copper);background:var(--card)}
+  .choice input{accent-color:var(--copper);margin:.25rem 0 0}
+
+  /* ---------- calls to action ---------- */
+  .cta{
+    appearance:none;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:.5rem;
+    font:inherit;
+    font-weight:600;
+    text-decoration:none;
+    border:1px solid transparent;
+    border-radius:2px;
+    padding:.85rem 1.1rem;
+    cursor:pointer;
+    text-align:center;
+    transition:background .18s ease;
+  }
+  .cta-wine{background:var(--wine);color:var(--tp)}
+  .cta-wine:hover{background:var(--wine-lift)}
+  .cta-copper{background:var(--copper);color:#20160F}
+  .cta-copper:hover{background:var(--copper-lift)}
+  .cta:focus-visible{outline:2px solid var(--tp);outline-offset:2px}
+
+  .note{font-size:.8rem;color:var(--tm);margin:0}
+  .note b{color:var(--copper);font-weight:600}
+
+  .back{
+    background:none;
+    border:none;
+    color:var(--tm);
+    font:inherit;
+    font-size:.85rem;
+    padding:0;
+    cursor:pointer;
+    align-self:flex-start;
+    text-decoration:underline;
+    text-underline-offset:3px;
+  }
+  .back:hover{color:var(--ts)}
+
+  footer{
+    border-top:1px solid var(--border);
+    padding-top:1rem;
+    color:var(--tm);
+    font-size:.82rem;
+    display:flex;
+    flex-wrap:wrap;
+    gap:.35rem 1rem;
+  }
+  footer a{color:var(--ts)}
+
+  @media(prefers-reduced-motion:reduce){
+    *{transition:none !important}
+  }
+</style>
+
+<div class="wrap">
+
+  <header class="top">
+    <h1 class="name">Iva Kojić</h1>
+    <p class="tag">Učim ljude i firme da koriste AI. Jedan na jedan, kroz radionice, i u procesima.</p>
+  </header>
+
+  <div class="doors">
+    <button class="door door-a" id="door-a" aria-expanded="false" aria-controls="panel-a">
+      <span class="door-label">Za pojedince</span>
+      <span class="door-sub">Hoću sama da naučim AI</span>
+      <span class="door-cue">Časovi jedan na jedan</span>
+    </button>
+
+    <button class="door door-b" id="door-b" aria-expanded="false" aria-controls="panel-b">
+      <span class="door-label">Za firme</span>
+      <span class="door-sub">Hoću AI u timu i u procesima</span>
+      <span class="door-cue">Clarity call</span>
+    </button>
+  </div>
+
+  <!-- ============ POJEDINCI ============ -->
+  <section class="panel panel-a" id="panel-a" hidden>
+    <h2>Časovi jedan na jedan, po tvom tempu</h2>
+    <p>
+      Krećemo od onoga što stvarno radiš u toku dana, pa biramo alat za to.
+      Bez teorije koja ti ne treba. Prvi čas je probni.
+    </p>
+    <ul class="proof">
+      <li><b>200+</b> studenata</li>
+      <li><b>2</b> godine nastave</li>
+      <li><b>6</b> predmeta</li>
+      <li>MSc iz AI, prosek <b>9,78</b></li>
+    </ul>
+    <a class="cta cta-wine" id="preply-link" href="#" target="_blank" rel="noopener">
+      Zakaži probni čas na Preply
+    </a>
+    <p class="note" id="preply-note" hidden><b>Za Ivu:</b> upiši Preply link u CONFIG na vrhu skripte.</p>
+    <button class="back" type="button" data-close>Nazad na izbor</button>
+  </section>
+
+  <!-- ============ FIRME ============ -->
+  <section class="panel panel-b" id="panel-b" hidden>
+    <h2>Tri pitanja, pa razgovor</h2>
+    <p>
+      Odgovori kratko. Sa ovim dolazim na poziv sa predlogom umesto sa pitanjima,
+      pa nam prvi razgovor ne ode na upoznavanje.
+    </p>
+
+    <form id="firm-form" novalidate>
+      <div class="q" style="margin-bottom:1.1rem">
+        <label class="q-label" for="q1"><span class="q-num">01</span>Čime se firma bavi i koliko vas je?</label>
+        <input type="text" id="q1" name="q1" placeholder="Marketing agencija, deset ljudi" autocomplete="organization">
+      </div>
+
+      <div class="q" style="margin-bottom:1.1rem">
+        <span class="q-label"><span class="q-num">02</span>Šta hoćete da rešite?</span>
+        <div class="choices">
+          <label class="choice"><input type="radio" name="q2" value="Obuka tima za AI"><span>Obuka tima za AI</span></label>
+          <label class="choice"><input type="radio" name="q2" value="Automatizacija procesa"><span>Automatizacija procesa koji nam jedu vreme</span></label>
+          <label class="choice"><input type="radio" name="q2" value="Ulazak na novo trziste"><span>Ulazak na novo tržište</span></label>
+          <label class="choice"><input type="radio" name="q2" value="Jos ne znamo"><span>Još ne znamo tačno</span></label>
+        </div>
+      </div>
+
+      <div class="q" style="margin-bottom:1.25rem">
+        <label class="q-label" for="q3"><span class="q-num">03</span>Kada biste krenuli i koji je okvir budžeta?</label>
+        <input type="text" id="q3" name="q3" placeholder="Oktobar, do 1.500 evra">
+      </div>
+
+      <button class="cta cta-copper" type="submit" style="width:100%">Bukiraj clarity call</button>
+    </form>
+
+    <p class="note" id="firm-note" hidden><b>Za Ivu:</b> upiši Calendly link u CONFIG na vrhu skripte.</p>
+    <button class="back" type="button" data-close>Nazad na izbor</button>
+  </section>
+
+  <footer>
+    <span>Radionice, savetovanje i ulazak na tržište</span>
+    <a href="https://ivakojic.com">ivakojic.com</a>
+  </footer>
+
+</div>
+
+<script>
+  // ── POPUNITI JEDNOM ────────────────────────────────────────────────
+  const CONFIG = {
+    preply:   "https://preply.in/IVA6EN41435190112?ts=17894594",
+    calendly: "https://calendly.com/ivakoj/1-1-session"
+  };
+  // ───────────────────────────────────────────────────────────────────
+
+  const doors  = { a: document.getElementById("door-a"), b: document.getElementById("door-b") };
+  const panels = { a: document.getElementById("panel-a"), b: document.getElementById("panel-b") };
+
+  function open(which) {
+    for (const key of ["a", "b"]) {
+      const isTarget = key === which;
+      panels[key].hidden = !isTarget;
+      doors[key].setAttribute("aria-expanded", String(isTarget));
+    }
+    if (which) panels[which].scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  function closeAll() {
+    open(null);
+    doors.a.scrollIntoView({ behavior: "smooth", block: "nearest" });
+  }
+
+  doors.a.addEventListener("click", () => open(doors.a.getAttribute("aria-expanded") === "true" ? null : "a"));
+  doors.b.addEventListener("click", () => open(doors.b.getAttribute("aria-expanded") === "true" ? null : "b"));
+  for (const btn of document.querySelectorAll("[data-close]")) btn.addEventListener("click", closeAll);
+
+  // Preply door
+  const preplyLink = document.getElementById("preply-link");
+  if (CONFIG.preply) {
+    preplyLink.href = CONFIG.preply;
+  } else {
+    preplyLink.removeAttribute("href");
+    preplyLink.style.opacity = ".55";
+    document.getElementById("preply-note").hidden = false;
+  }
+
+  // Firm door: three answers travel with the booking
+  document.getElementById("firm-form").addEventListener("submit", (e) => {
+    e.preventDefault();
+    const data = new FormData(e.target);
+    const summary = [
+      "Firma: "   + (data.get("q1") || "nije popunjeno"),
+      "Potreba: " + (data.get("q2") || "nije popunjeno"),
+      "Okvir: "   + (data.get("q3") || "nije popunjeno")
+    ].join(" · ");
+
+    if (!CONFIG.calendly) {
+      document.getElementById("firm-note").hidden = false;
+      return;
+    }
+    const url = new URL(CONFIG.calendly);
+    url.searchParams.set("a1", summary);
+    window.open(url.toString(), "_blank", "noopener");
+  });
+</script>
