@@ -1,0 +1,1367 @@
+<!DOCTYPE html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Client Overview · kostur</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;0,9..40,800;1,9..40,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* Brand */
+  --terra:    #D94F2B;
+  --terra-dk: #B33A1A;
+  --terra-bg: #FBE8E3;
+  /* Neutrals */
+  --charcoal: #1A1A1A;
+  --char2:    #2C2C2C;
+  --char3:    #4A4A4A;
+  --muted:    #8A837C;
+  --white:    #FFFFFF;
+  --cream:    #F5F0EB;
+  --cream2:   #EDE7DE;
+  --cream3:   #E0D8CE;
+  --line:     #DDD7D0;
+  /* Package accents */
+  --pkg-MA:   #D94F2B;
+  --pkg-MT:   #1A1A1A;
+  --pkg-CC:   #7A5230;
+  --pkg-PR:   #8B0000;
+  /* Shadows */
+  --sh:  rgba(26,26,26,.08);
+  --sh2: rgba(26,26,26,.16);
+}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--cream);color:var(--charcoal);
+  font-family:'DM Sans',system-ui,sans-serif;font-size:16px;line-height:1.55;min-height:100vh;
+}
+.mono{font-family:'IBM Plex Mono',monospace}
+.wrap{max-width:1540px;margin:0 auto;padding:0 32px}
+
+/* ─────────────────────────────────────────────
+   HEADER — dark editorial
+───────────────────────────────────────────── */
+header{
+  background:var(--charcoal);color:var(--white);
+  padding:48px 0 0;
+}
+.header-top{
+  display:flex;justify-content:space-between;align-items:flex-start;
+  flex-wrap:wrap;gap:16px;margin-bottom:32px;
+}
+.brand-mark{
+  font-family:'DM Sans',sans-serif;font-weight:800;font-size:22px;
+  color:var(--terra);letter-spacing:-.02em;text-transform:lowercase;
+}
+.brand-sub{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;
+  letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.45);
+  margin-top:4px;
+}
+.header-meta{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;
+  letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.4);
+  text-align:right;line-height:1.8;
+}
+h1{
+  font-family:'DM Sans',sans-serif;font-weight:800;
+  font-size:clamp(42px,6vw,82px);line-height:1.0;letter-spacing:-.04em;
+  margin-bottom:14px;color:var(--white);
+}
+h1 .pill{
+  display:inline-block;
+  border:3px solid var(--terra);border-radius:100px;
+  padding:4px 28px 8px;color:var(--terra);
+  font-size:inherit;font-weight:inherit;font-family:inherit;letter-spacing:inherit;
+  font-style:normal;
+}
+.lede{
+  font-size:16px;max-width:600px;
+  color:rgba(255,255,255,.55);line-height:1.55;margin-bottom:36px;
+}
+
+/* KPI strip — inside dark header */
+.kpis{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));
+  gap:1px;background:rgba(255,255,255,.1);
+  border-top:1px solid rgba(255,255,255,.1);
+}
+.kpi{
+  background:var(--charcoal);padding:20px 22px;
+  transition:background .15s;
+}
+.kpi:hover{background:var(--char2)}
+.kpi .lbl{
+  font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.14em;
+  text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:8px;line-height:1.4;
+}
+.kpi .val{
+  font-family:'DM Sans',sans-serif;font-weight:800;
+  font-size:clamp(22px,2.4vw,30px);line-height:1;letter-spacing:-.02em;color:var(--white);
+}
+.kpi .val.terra{color:var(--terra)}
+.kpi .sub{
+  font-family:'IBM Plex Mono',monospace;font-size:9px;
+  color:rgba(255,255,255,.3);margin-top:6px;
+}
+.kpi.dim .val{color:rgba(255,255,255,.3)}
+
+/* ─────────────────────────────────────────────
+   FILTER BAR
+───────────────────────────────────────────── */
+.filterbar{
+  position:sticky;top:0;z-index:40;background:var(--cream);
+  border-bottom:1px solid var(--line);padding:14px 0 12px;
+  box-shadow:0 2px 12px rgba(26,26,26,.07);
+}
+.filter-row{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.filter-label{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--muted);white-space:nowrap;margin-right:2px;
+}
+.chip{
+  font-family:'IBM Plex Mono',monospace;font-size:11px;font-weight:500;
+  padding:5px 13px;border-radius:100px;
+  background:var(--cream2);border:1.5px solid var(--line);
+  color:var(--char3);cursor:pointer;transition:all .15s;
+  letter-spacing:.02em;white-space:nowrap;user-select:none;
+}
+.chip:hover{background:var(--cream3);border-color:var(--muted)}
+.chip.active{background:var(--terra);color:var(--white);border-color:var(--terra)}
+.chip .ct{margin-left:5px;opacity:.55;font-size:10px}
+.chip.active .ct{opacity:.8}
+.search{
+  flex:1;min-width:180px;max-width:260px;margin-left:auto;
+  font-family:'DM Sans',sans-serif;font-size:14px;
+  background:var(--white);border:1.5px solid var(--line);
+  padding:7px 16px;border-radius:100px;color:var(--charcoal);
+  outline:none;transition:border-color .15s;
+}
+.search:focus{border-color:var(--terra)}
+.search::placeholder{color:var(--muted)}
+.filter-row2{margin-top:9px}
+.emp-chips{display:flex;gap:5px;flex-wrap:wrap;align-items:center}
+.emp-chip{
+  display:inline-flex;align-items:center;gap:5px;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;
+  padding:3px 10px 3px 3px;border-radius:100px;
+  background:var(--cream2);border:1.5px solid var(--line);
+  cursor:pointer;transition:all .15s;user-select:none;color:var(--char3);
+}
+.emp-chip:hover{background:var(--cream3)}
+.emp-chip.active{border-color:var(--terra);background:var(--terra-bg);color:var(--terra-dk)}
+.emp-chip .av{
+  width:20px;height:20px;border-radius:50%;font-size:7.5px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+
+/* ─────────────────────────────────────────────
+   PROFILE PANEL (Personal Dashboard)
+───────────────────────────────────────────── */
+.profile{
+  display:flex;gap:18px;align-items:flex-start;
+  background:var(--white);border:1.5px solid var(--line);border-radius:14px;
+  padding:20px 22px;margin-top:14px;box-shadow:0 1px 3px var(--sh);
+}
+.profile .av{width:46px;height:46px;font-size:16px;flex-shrink:0}
+.profile-body{flex:1;min-width:0}
+.profile-name{font-family:'DM Sans',sans-serif;font-weight:800;font-size:20px;letter-spacing:-.02em;color:var(--charcoal)}
+.profile-role{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;
+  color:var(--terra);margin-top:2px;margin-bottom:10px;
+}
+.profile-tasks{font-size:13px;line-height:1.6;color:var(--char3)}
+
+/* Workflow guide-ovi */
+.wf-wrap{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
+.wf-heading{
+  font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--muted);margin-bottom:10px;
+}
+details.wf{
+  border:1px solid var(--line);border-radius:10px;background:var(--white);
+  padding:13px 16px;margin-bottom:8px;
+}
+details.wf:last-child{margin-bottom:0}
+details.wf summary{
+  cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:700;font-size:14px;
+  color:var(--charcoal);list-style:none;display:flex;align-items:center;gap:9px;
+}
+details.wf summary::before{content:'▸';color:var(--terra);font-size:11px;transition:transform .15s}
+details.wf[open] summary::before{transform:rotate(90deg)}
+details.wf summary::-webkit-details-marker{display:none}
+.wf-count{
+  margin-left:auto;font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:500;
+  letter-spacing:.06em;text-transform:uppercase;color:var(--muted);
+  background:var(--cream2);padding:3px 9px;border-radius:100px;
+}
+.wf-steps{margin:10px 0 2px 20px;padding:0;font-size:12.5px;line-height:1.65;color:var(--char3)}
+.wf-steps li{margin-bottom:5px}
+
+/* Workflow flowchart (Miro-style process flow) */
+.flow{margin-top:16px;padding-left:4px}
+.flow-step{position:relative;padding-left:46px;padding-bottom:16px}
+.flow-step:last-child{padding-bottom:2px}
+.flow-step::before{
+  content:'';position:absolute;left:16px;top:32px;bottom:-2px;width:2px;
+  background:linear-gradient(var(--terra),var(--cream3));
+}
+.flow-step:last-child::before{display:none}
+.flow-num{
+  position:absolute;left:0;top:0;width:33px;height:33px;border-radius:50%;
+  background:var(--terra);color:#fff;display:flex;align-items:center;justify-content:center;
+  font-family:'IBM Plex Mono',monospace;font-weight:600;font-size:14px;z-index:1;
+  box-shadow:0 2px 6px rgba(217,79,43,.28);
+}
+.flow-card{
+  background:var(--cream);border:1.5px solid var(--line);border-radius:10px;
+  padding:12px 16px;font-size:13px;line-height:1.55;color:var(--char3);
+  transition:border-color .15s,transform .15s;
+}
+.flow-card:hover{border-color:var(--cream3);transform:translateX(2px)}
+
+/* ─────────────────────────────────────────────
+   RESULTS META
+───────────────────────────────────────────── */
+.results-meta{
+  padding:14px 0 8px;font-family:'IBM Plex Mono',monospace;font-size:11px;
+  color:var(--muted);letter-spacing:.04em;
+  display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;
+}
+.results-meta strong{color:var(--charcoal);font-weight:600}
+
+/* ─────────────────────────────────────────────
+   GRID
+───────────────────────────────────────────── */
+.grid{
+  display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));
+  gap:16px;padding:6px 0 80px;
+}
+
+/* Section divider */
+.sec-div{
+  grid-column:1/-1;display:flex;align-items:center;gap:14px;
+  padding:20px 0 4px;
+  font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--muted);
+}
+.sec-div::before,.sec-div::after{content:'';flex:1;height:1px;background:var(--line)}
+.sec-div::before{max-width:16px}
+
+/* ─────────────────────────────────────────────
+   CARD
+───────────────────────────────────────────── */
+.card{
+  background:var(--white);border:1.5px solid var(--line);border-radius:14px;
+  padding:20px 20px 16px;position:relative;overflow:hidden;
+  box-shadow:0 1px 3px var(--sh);cursor:pointer;
+  transition:transform .18s,box-shadow .18s,border-color .18s;
+  display:flex;flex-direction:column;gap:12px;
+}
+.card:hover{transform:translateY(-3px);box-shadow:0 8px 24px var(--sh2);border-color:var(--cream3)}
+.card::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;border-radius:14px 0 0 14px}
+.card.p-MA::before{background:var(--pkg-MA)}
+.card.p-MT::before{background:var(--pkg-MT)}
+.card.p-CC::before{background:var(--pkg-CC)}
+.card.p-PR::before{background:var(--pkg-PR)}
+
+/* inactive — faded & greyscale */
+.card.inactive{opacity:.36;filter:grayscale(.4)}
+.card.inactive:hover{opacity:.6;filter:grayscale(0);transform:translateY(-2px)}
+
+/* Card header */
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:10px}
+.cname{
+  font-family:'DM Sans',sans-serif;font-weight:700;font-size:17px;
+  line-height:1.2;letter-spacing:-.02em;flex:1;color:var(--charcoal);
+}
+.badge{
+  font-family:'IBM Plex Mono',monospace;font-size:9px;font-weight:600;
+  letter-spacing:.07em;text-transform:uppercase;padding:3px 9px;
+  border-radius:100px;white-space:nowrap;flex-shrink:0;
+}
+.badge.p-MA{background:var(--pkg-MA);color:#fff}
+.badge.p-MT{background:var(--pkg-MT);color:#fff}
+.badge.p-CC{background:var(--pkg-CC);color:#fff}
+.badge.p-PR{background:var(--pkg-PR);color:#fff}
+.badge.bivsi{background:var(--cream3);color:var(--muted)}
+
+/* Platforms */
+.platforms{display:flex;gap:4px;flex-wrap:wrap}
+.plat{
+  font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:500;
+  padding:2px 8px;background:var(--cream);border:1px solid var(--line);
+  border-radius:100px;color:var(--char3);text-transform:uppercase;letter-spacing:.04em;
+}
+
+/* Team grid on card */
+.team-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px 10px}
+.role-row{display:flex;flex-direction:column;gap:5px}
+.role-lbl{
+  font-family:'IBM Plex Mono',monospace;font-size:8.5px;
+  letter-spacing:.12em;text-transform:uppercase;color:var(--muted);
+}
+.role-avs{display:flex;gap:3px;flex-wrap:wrap}
+.av{
+  border-radius:50%;font-family:'IBM Plex Mono',monospace;font-weight:700;
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+
+/* Card footer */
+.card-foot{
+  display:flex;justify-content:space-between;align-items:center;
+  padding-top:10px;border-top:1px solid var(--line);margin-top:auto;gap:8px;
+}
+.swatches{display:flex;gap:3px}
+.sw{width:14px;height:14px;border-radius:4px;border:1px solid rgba(0,0,0,.07);flex-shrink:0}
+.start{
+  font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:var(--muted);
+}
+
+/* ─────────────────────────────────────────────
+   DRAWER
+───────────────────────────────────────────── */
+.overlay{
+  position:fixed;inset:0;background:rgba(26,26,26,.55);z-index:100;
+  opacity:0;pointer-events:none;transition:opacity .25s;
+}
+.overlay.open{opacity:1;pointer-events:all}
+
+.drawer{
+  position:fixed;top:0;right:0;bottom:0;width:min(500px,100vw);
+  background:var(--white);border-left:1.5px solid var(--line);z-index:101;
+  overflow-y:auto;transform:translateX(100%);
+  transition:transform .28s cubic-bezier(.4,0,.2,1);
+  box-shadow:-8px 0 32px rgba(26,26,26,.12);
+}
+.drawer.open{transform:translateX(0)}
+.d-inner{padding:36px 32px 64px}
+.d-close{
+  position:absolute;top:18px;right:18px;width:34px;height:34px;border-radius:50%;
+  background:var(--cream);border:1.5px solid var(--line);cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  font-size:18px;color:var(--muted);transition:all .15s;line-height:1;
+}
+.d-close:hover{background:var(--cream2);color:var(--charcoal)}
+
+.d-title{
+  font-family:'DM Sans',sans-serif;font-weight:800;font-size:24px;
+  line-height:1.1;letter-spacing:-.03em;margin:10px 0 22px;color:var(--charcoal);
+}
+.d-section{margin-bottom:22px}
+.d-sec-lbl{
+  font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--terra);margin-bottom:10px;
+  padding-bottom:6px;border-bottom:1.5px solid var(--terra-bg);
+}
+.d-row{
+  display:flex;justify-content:space-between;align-items:baseline;
+  gap:12px;padding:6px 0;border-bottom:1px solid var(--line);
+}
+.d-row:last-child{border-bottom:none}
+.d-key{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;
+  color:var(--muted);letter-spacing:.04em;white-space:nowrap;
+}
+.d-val{font-size:14px;font-weight:500;color:var(--charcoal);text-align:right}
+
+.team-d{display:flex;flex-direction:column;gap:10px}
+.team-d-row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.team-d-role{
+  font-family:'IBM Plex Mono',monospace;font-size:9.5px;
+  letter-spacing:.08em;text-transform:uppercase;color:var(--muted);min-width:110px;
+}
+.team-d-members{display:flex;gap:5px;flex-wrap:wrap;justify-content:flex-end}
+.pill{
+  display:inline-flex;align-items:center;gap:5px;
+  font-family:'IBM Plex Mono',monospace;font-size:11px;
+  padding:3px 10px 3px 3px;border-radius:100px;
+  border:1.5px solid var(--line);background:var(--cream);color:var(--char3);
+}
+/* Primary/support editor oznake */
+.pill-wrap{display:inline-flex;align-items:center;gap:4px}
+.ed-tag{
+  font-family:'IBM Plex Mono',monospace;font-size:8px;font-weight:700;
+  letter-spacing:.08em;text-transform:uppercase;padding:2px 6px;border-radius:100px;
+}
+.ed-tag.pri{background:var(--terra-bg);color:var(--terra)}
+.ed-tag.sup{background:var(--cream3);color:var(--muted)}
+.ed-av{position:relative;display:inline-flex}
+.ed-av.sup::after{
+  content:'S';position:absolute;right:-3px;bottom:-3px;
+  width:12px;height:12px;border-radius:50%;background:var(--muted);color:#fff;
+  font-family:'IBM Plex Mono',monospace;font-size:7px;font-weight:700;
+  display:flex;align-items:center;justify-content:center;border:1.5px solid var(--white);
+}
+
+.palette{display:flex;gap:10px;flex-wrap:wrap;padding-bottom:4px}
+.pal-sw{display:flex;flex-direction:column;align-items:center;gap:5px}
+.pal-sw .block{width:42px;height:42px;border-radius:8px;border:1px solid rgba(0,0,0,.08)}
+.pal-sw .hex{
+  font-family:'IBM Plex Mono',monospace;font-size:8px;color:var(--muted);letter-spacing:.02em;
+}
+
+.bivsi-banner{
+  background:var(--cream2);border:1.5px solid var(--line);border-radius:8px;
+  padding:9px 14px;margin-bottom:16px;
+  font-family:'IBM Plex Mono',monospace;font-size:9.5px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:center;
+}
+
+.empty{
+  grid-column:1/-1;text-align:center;padding:60px 20px;
+  color:var(--muted);font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.06em;
+}
+.no-data{color:var(--muted);font-style:italic;font-size:13px}
+
+/* ═════════════════════════════════════════════
+   PERSONALNI DASHBOARD — in-place panel
+═════════════════════════════════════════════ */
+.pp{
+  background:var(--white);border:1.5px solid var(--line);border-radius:14px;
+  padding:24px 26px;margin-top:14px;box-shadow:0 1px 3px var(--sh);
+}
+.pp-bar{display:flex;justify-content:space-between;align-items:center;gap:14px;margin-bottom:20px}
+.pp-id{display:flex;align-items:center;gap:14px}
+.pp-name{font-family:'DM Sans',sans-serif;font-weight:800;font-size:23px;letter-spacing:-.02em;color:var(--charcoal);line-height:1}
+.pp-role{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--terra);margin-top:6px}
+.pp-close{
+  font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;
+  background:var(--cream2);border:1.5px solid var(--line);color:var(--char3);
+  padding:8px 15px;border-radius:100px;cursor:pointer;transition:all .15s;white-space:nowrap;
+}
+.pp-close:hover{background:var(--cream3);color:var(--charcoal)}
+.pp-stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:10px}
+.pp-stat{background:var(--cream);border:1px solid var(--line);border-radius:10px;padding:13px 16px}
+.pp-stat .lbl{font-family:'IBM Plex Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.pp-stat .val{font-family:'DM Sans',sans-serif;font-weight:800;font-size:23px;line-height:1;color:var(--charcoal)}
+.pp-stat .val.terra{color:var(--terra)}
+.pp-sec{margin-top:22px;padding-top:20px;border-top:1px solid var(--line)}
+.pp-sec-h{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--terra);margin-bottom:14px}
+
+/* ── GLOBALNA KARTICA: workflow ─────────────────────────────── */
+.cards{margin:22px 0 4px}
+.card{background:var(--white);border:1px solid var(--line);border-radius:13px;overflow:hidden}
+.card>summary{list-style:none;cursor:pointer;padding:15px 18px;display:flex;justify-content:space-between;
+  align-items:center;gap:10px}
+.card>summary::-webkit-details-marker{display:none}
+.card>summary:hover .card-t{color:var(--terra)}
+.card-t{font-family:'DM Sans',sans-serif;font-weight:800;font-size:15px;color:var(--charcoal)}
+.card-s{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);margin-top:3px}
+.card-x{font-family:'IBM Plex Mono',monospace;font-size:16px;color:var(--muted)}
+.card[open] .card-x{transform:rotate(45deg)}
+.card-b{padding:0 18px 18px;border-top:1px solid var(--cream2);margin-top:2px;padding-top:16px}
+.pf-row.moved{background:#EFF3F8}
+.pf-row.moved .dd{color:#2E5A8B;font-weight:700}
+
+/* ── PERFORMANSE (ClickUp) ─────────────────────────────────── */
+.pf-per{display:flex;gap:5px;flex-wrap:wrap;margin-bottom:14px;align-items:center}
+.pf-per button{font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--white);border:1px solid var(--line);border-radius:20px;padding:5px 12px;cursor:pointer;color:var(--char3)}
+.pf-per button:hover{border-color:var(--terra);color:var(--terra)}
+.pf-per button.on{background:var(--charcoal);border-color:var(--charcoal);color:#fff}
+.pf-per .sep{width:1px;height:18px;background:var(--line);margin:0 5px}
+.pf-per2{margin:-6px 0 14px;padding-left:2px}
+.pf-per2 button{background:var(--cream);font-size:9.5px}
+.pf-per2 button.on{background:var(--terra);border-color:var(--terra);color:#fff}
+.pf-nowk{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted)}
+.pf-row.slip{background:#FAF3E8}
+.pf-row.slip .dd{color:#8A6A16;font-weight:700}
+.pf-stat .val.red{color:var(--terra-dk)}
+.pf-stat.alarm{background:var(--terra-bg);border-color:var(--terra)}
+.pf-stat.upoz{background:#FAF1DA;border-color:#D9B45C}
+.pf-stat .val.zuto{color:#8A6A16}
+.pf-bar{height:7px;background:var(--cream2);border-radius:4px;overflow:hidden;margin-top:14px;display:flex}
+.pf-bar i{display:block;height:100%}
+.pf-legend{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em;color:var(--muted);
+  margin-top:7px;display:flex;gap:14px;flex-wrap:wrap}
+.pf-legend b{color:var(--charcoal);font-weight:700}
+.pf-group{margin-top:16px}
+.pf-group>summary{list-style:none;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:10px;
+  letter-spacing:.1em;text-transform:uppercase;color:var(--char3);padding:9px 13px;background:var(--cream);
+  border:1px solid var(--line);border-radius:9px;display:flex;justify-content:space-between;align-items:center}
+.pf-group>summary::-webkit-details-marker{display:none}
+.pf-group>summary:hover{border-color:var(--terra);color:var(--terra)}
+.pf-group[open]>summary{border-radius:9px 9px 0 0;border-bottom-color:transparent}
+.pf-group.hot>summary{background:var(--terra-bg);border-color:var(--terra);color:var(--terra-dk);font-weight:700}
+.pf-group.warm>summary{background:#FAF1DA;border-color:#D9B45C;color:#8A6A16;font-weight:700}
+.pf-group.warm>summary:hover{color:#6E5410}
+.pf-group .n{font-weight:700}
+.pf-list{border:1px solid var(--line);border-top:0;border-radius:0 0 9px 9px;max-height:340px;overflow-y:auto}
+.pf-row{display:grid;grid-template-columns:1fr 150px 88px;gap:10px;padding:8px 13px;border-bottom:1px solid var(--cream2);
+  font-size:12.5px;align-items:center}
+.pf-row:last-child{border-bottom:0}
+.pf-row .cl{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+.pf-row .dd{font-family:'IBM Plex Mono',monospace;font-size:10.5px;text-align:right;color:var(--muted)}
+.pf-row.late{background:var(--terra-bg)}
+.pf-row.late .dd{color:var(--terra-dk);font-weight:700}
+.pf-row.late .tn{color:var(--terra-dk);font-weight:600}
+.pf-none{padding:16px 13px;font-size:12.5px;color:var(--muted);border:1px solid var(--line);border-top:0;border-radius:0 0 9px 9px}
+.pf-warn{margin-top:14px;font-size:11.5px;color:var(--muted);background:var(--cream);border:1px solid var(--line);
+  border-radius:9px;padding:11px 14px;line-height:1.6}
+.pf-warn b{color:var(--charcoal)}
+@media(max-width:620px){.pf-row{grid-template-columns:1fr 76px}.pf-row .cl{display:none}}
+.pp-zad{font-size:13px;line-height:1.5;color:var(--char3)}
+.pp-zrow{padding:5px 0}
+.pp-zrow strong{color:var(--charcoal);font-weight:700}
+.pp-clients{display:grid;grid-template-columns:repeat(auto-fill,minmax(248px,1fr));gap:12px}
+.pp-cl{background:var(--cream);border:1.5px solid var(--line);border-left:4px solid var(--line);border-radius:10px;padding:14px 16px;cursor:pointer;transition:border-color .15s,transform .15s}
+.pp-cl:hover{transform:translateY(-2px);border-color:var(--cream3)}
+.pp-cl.p-MA{border-left-color:var(--pkg-MA)} .pp-cl.p-MT{border-left-color:var(--pkg-MT)}
+.pp-cl.p-CC{border-left-color:var(--pkg-CC)} .pp-cl.p-PR{border-left-color:var(--pkg-PR)}
+.pp-cl-name{font-family:'DM Sans',sans-serif;font-weight:700;font-size:15px;color:var(--charcoal);letter-spacing:-.01em}
+.pp-cl-meta{font-family:'IBM Plex Mono',monospace;font-size:9.5px;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);margin:3px 0 9px}
+.pp-cl-roles{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:9px;min-height:18px}
+.pp-cl-role{font-family:'IBM Plex Mono',monospace;font-size:9.5px;font-weight:600;padding:2px 8px;border-radius:100px;background:var(--terra);color:#fff}
+.pp-cl-fr{font-size:11.5px;color:var(--char3);line-height:1.5}
+.pp-cl-fr b{color:var(--muted);font-weight:600}
+
+
+/* ═════════════════════════════════════════════
+   MOBILNI PRIKAZ
+═════════════════════════════════════════════ */
+@media(max-width:760px){
+  .wrap{padding:0 18px}
+  .grid{grid-template-columns:1fr;gap:13px}
+}
+@media(max-width:560px){
+  .wrap{padding:0 14px}
+  header{padding:30px 0 0}
+  h1{font-size:clamp(34px,11vw,48px)}
+  .header-top{gap:10px}
+  .header-meta{text-align:left}
+  .lede{font-size:14px}
+  #sync-status{margin-top:-14px !important}
+  .kpis{grid-template-columns:repeat(2,1fr)}
+  .filter-row{gap:6px}
+  .chip{font-size:10px;padding:5px 11px}
+  .search{max-width:100%;margin-left:0;min-width:140px}
+
+  .pp{padding:18px 15px}
+  .pp-bar{flex-wrap:wrap;align-items:flex-start}
+  .pp-name{font-size:20px}
+  .pp-stats{grid-template-columns:repeat(2,1fr)}
+  .pp-clients{grid-template-columns:1fr}
+  .flow-step{padding-left:42px}
+  .flow-num{width:30px;height:30px;font-size:13px}
+  .flow-step::before{left:14px}
+  .flow-card{font-size:12.5px;padding:11px 13px}
+
+  .drawer{width:100vw}
+  .d-inner{padding:30px 20px 50px}
+  .team-grid{grid-template-columns:1fr 1fr}
+}
+
+.kostur-red{height:34px;margin-top:8px;border:1px dashed rgba(0,0,0,.18);border-radius:4px}
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════ HEADER -->
+<header>
+  <div class="wrap">
+    <div class="header-top">
+      <div>
+        <div class="brand-mark">client overview</div>
+        <div class="brand-sub">kostur ekrana · bez podataka</div>
+      </div>
+      <div class="header-meta">
+        <div id="today"></div>
+        <div>ivakojic.com</div>
+      </div>
+    </div>
+    <h1><span class="pill">Vaša</span> agencija</h1>
+    <p class="lede">Ovo je kostur, bez ijednog podatka. Vidi se gde stoje klijenti, ko je na čemu, gde ide vaš workflow i gde se prikazuju zadaci.<br>Vaš ClickUp ostaje tamo gde jeste. Ovaj ekran stoji iznad njega i čita iz njega.</p>
+    <p class="lede" id="sync-status" style="font-size:11px;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:.1em;margin-top:-24px"></p>
+    <div class="kpis" id="kpis"></div>
+  </div>
+</header>
+
+<!-- ═══════════════════════════════════════════════ FILTER BAR -->
+<div class="filterbar">
+  <div class="wrap">
+    <div class="filter-row">
+      <span class="filter-label">Paket</span>
+      <button class="chip active" data-pkg="ALL" onclick="setPkg(this,'ALL')">Svi<span class="ct" id="ct-ALL"></span></button>
+      <button class="chip" data-pkg="MA" onclick="setPkg(this,'MA')">Paket A<span class="ct" id="ct-MA"></span></button>
+      <button class="chip" data-pkg="MT" onclick="setPkg(this,'MT')">Paket B<span class="ct" id="ct-MT"></span></button>
+      <button class="chip" data-pkg="CC" onclick="setPkg(this,'CC')">Paket C<span class="ct" id="ct-CC"></span></button>
+      <button class="chip" data-pkg="PR" onclick="setPkg(this,'PR')">Paket D<span class="ct" id="ct-PR"></span></button>
+      <input class="search" type="text" placeholder="Pretraga…" oninput="setSearch(this.value)">
+    </div>
+    <div class="filter-row filter-row2">
+      <span class="filter-label">Tim · klikni za dashboard</span>
+      <div class="emp-chips" id="emp-chips"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ MAIN -->
+<div class="wrap">
+  <div class="cards" id="global-cards"></div>
+  <div id="profile-panel"></div>
+  <div class="results-meta" id="results-meta">
+    <span id="res-txt"></span>
+    <span id="res-filter"></span>
+  </div>
+  <div class="grid" id="grid"></div>
+</div>
+
+<!-- ═══════════════════════════════════════════════ DRAWER -->
+<div class="overlay" id="overlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer">
+  <button class="d-close" onclick="closeDrawer()">×</button>
+  <div class="d-inner" id="d-content"></div>
+</div>
+
+<script>
+// ─────────────────────────────────────────────────────────────
+//  ZADACI IZ CLICKUP-A
+//  U kosturu je prazno. Kod klijenta ovde stoje njihovi zadaci.
+// ─────────────────────────────────────────────────────────────
+/* CLICKUP_DATA_START */
+const CLICKUP = null;
+/* CLICKUP_DATA_END */
+
+// Rezervna kopija Sheet-a, da dashboard radi i kad se otvori duplim klikom
+// (tada browser ne sme da povuče podatke sa Google-a). Upisuje je isti skript.
+/* SHEET_DATA_START */
+const OFFLINE_CSV = {"snimljeno": "kostur", "sheet": "ID,Naziv klijenta,Status,Paket,Osoba,Grad,Cena,Sati,Platforme,Kontent,Storije,SMM,Content Creator,Video Editor,Dizajner,Datum početka\n1,Klijent 01,aktivan,MA,,,,,,,,,,,,\n2,Klijent 02,aktivan,MA,,,,,,,,,,,,\n3,Klijent 03,aktivan,MT,,,,,,,,,,,,\n4,Klijent 04,aktivan,MT,,,,,,,,,,,,\n5,Klijent 05,aktivan,CC,,,,,,,,,,,,\n6,Klijent 06,aktivan,PR,,,,,,,,,,,,", "roles": "Ime,Zaduženja\nČlan 01,ovde stoje zaduženja te osobe\nČlan 02,ovde stoje zaduženja te osobe\nČlan 03,ovde stoje zaduženja te osobe\nČlan 04,ovde stoje zaduženja te osobe\nČlan 05,ovde stoje zaduženja te osobe\nČlan 06,ovde stoje zaduženja te osobe", "workflows": "Workflow,Korak 1,Korak 2,Korak 3,Korak 4,Korak 5\nOvde stoji vaš proces,korak,korak,korak,korak,korak\nI svaki sledeći proces,korak,korak,korak,korak,korak"};
+/* SHEET_DATA_END */
+
+// Pokušaj uživo sa Sheet-a, pa ako ne uspe uzmi lokalnu kopiju.
+async function getCSV(url, key) {
+  try {
+    if (!url) throw new Error('kostur');
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    return { text: await res.text(), live: true };
+  } catch (err) {
+    if (OFFLINE_CSV && OFFLINE_CSV[key]) return { text: OFFLINE_CSV[key], live: false };
+    throw err;
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+//  EMPLOYEES
+// ─────────────────────────────────────────────────────────────
+const EMP = {
+  'Član 01': {i:'01', c:'#fff', bg:'#4A4A4A', active:true, role:'Vlasnik'},
+  'Član 02': {i:'02', c:'#fff', bg:'#4A4A4A', active:true, role:'Project Manager'},
+  'Član 03': {i:'03', c:'#fff', bg:'#4A4A4A', active:true, role:'Account'},
+  'Član 04': {i:'04', c:'#fff', bg:'#4A4A4A', active:true, role:'Content'},
+  'Član 05': {i:'05', c:'#fff', bg:'#4A4A4A', active:true, role:'Dizajn'},
+  'Član 06': {i:'06', c:'#fff', bg:'#4A4A4A', active:true, role:'Video'},
+};
+
+// Stara/pogrešna imena iz Sheet-a -> kanonsko ime u EMP
+const NAME_ALIASES = {};
+function normName(name) {
+  name = (name||'').trim();
+  return NAME_ALIASES[name] || name;
+}
+
+// ─────────────────────────────────────────────────────────────
+//  CLIENTS — učitano dinamički iz Google Sheet-a (Tamarin Drive)
+// ─────────────────────────────────────────────────────────────
+const SHEET_CSV_URL = '';
+const ROLES_CSV_URL = '';
+const WORKFLOWS_CSV_URL = '';
+
+// Osoba -> Zaduženja (iz "Tim" taba)
+let ROLES = {};
+
+const PKG_MAP = {
+  'Paket A':'MA', 'Paket B':'MT', 'Paket C':'CC', 'Paket D':'PR',
+  'MA':'MA', 'MT':'MT', 'CC':'CC', 'PR':'PR',
+};
+
+let CLIENTS = [];
+
+// Minimalni RFC4180 CSV parser — podržava navodnike, zareze i nove redove unutar polja
+function parseCSV(text) {
+  const rows = [];
+  let row = [], field = '', inQuotes = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i], next = text[i+1];
+    if (inQuotes) {
+      if (ch === '"' && next === '"') { field += '"'; i++; }
+      else if (ch === '"') { inQuotes = false; }
+      else { field += ch; }
+    } else {
+      if (ch === '"') { inQuotes = true; }
+      else if (ch === ',') { row.push(field); field = ''; }
+      else if (ch === '\r') { /* skip */ }
+      else if (ch === '\n') { row.push(field); field = ''; rows.push(row); row = []; }
+      else { field += ch; }
+    }
+  }
+  if (field.length || row.length) { row.push(field); rows.push(row); }
+  return rows;
+}
+
+// Razdvaja "A, B | C" -> ['A','B','C'], normalizuje imena ljudi i ignoriše prazne placeholdere
+function splitMulti(s) {
+  return (s||'').split(/[|,]/).map(x => normName(x.trim()))
+    .filter(x => x && x !== '/' && x !== '—' && x !== '-');
+}
+// Razdvaja listu (platforme i sl.) bez normalizacije imena
+function splitList(s) {
+  return (s||'').split(/[|,]/).map(x => x.trim()).filter(Boolean);
+}
+// Parsira Video Editor kolonu uz primary/support oznaku.
+// Support editor se u Sheet-u označi sufiksom "(support)" / "(sup)" / "(s)" — bez oznake = primary.
+// Npr. "Ime | Drugo ime (support)" -> [{name:'Ime',support:false},{name:'Drugo ime',support:true}]
+function parseEditors(s) {
+  return (s||'').split(/[|,]/).map(raw => {
+    let x = (raw||'').trim();
+    if (!x || x === '/' || x === '—' || x === '-') return null;
+    const support = /\((?:support|sup|s)\)/i.test(x);
+    x = x.replace(/\((?:support|sup|s|primary|prim|p)\)/ig, '').trim();
+    const name = normName(x);
+    return name ? {name, support} : null;
+  }).filter(Boolean);
+}
+function getColors(cols) {
+  return cols.map(c => (c||'').trim()).filter(c => /^#[0-9a-fA-F]{3,8}$/.test(c));
+}
+function combineFonts(canva, capcut, caption) {
+  return [canva, capcut, caption].map(s => (s||'').trim()).filter(Boolean).join(' · ');
+}
+
+function mapRowToClient(cols, idx) {
+  const get = i => (cols[i] || '').trim();
+  const idRaw = get(0);
+  const editors = parseEditors(get(13));
+  return {
+    id:       idRaw ? parseInt(idRaw, 10) : 9000 + idx,
+    status:   get(2).toLowerCase() === 'aktivan' ? 'active' : 'inactive',
+    name:     get(1),
+    pkg:      PKG_MAP[get(3)] || 'MA',
+    grad:     get(5),
+    platforms: splitList(get(8)),
+    content:  get(9),
+    stories:  get(10),
+    smm:      splitMulti(get(11)),
+    creator:  splitMulti(get(12)),
+    editor:    editors.map(e=>e.name),
+    editorMeta: editors,
+    designer: splitMulti(get(14)),
+    start:    get(15) || '—',
+    colors:   getColors([get(16), get(17), get(18), get(19), get(20)]),
+    fonts:    combineFonts(get(21), get(22), get(23)),
+  };
+}
+
+function mergeRoles(roles) { return roles; }
+
+async function loadRoles() {
+  try {
+    const { text } = await getCSV(ROLES_CSV_URL, 'roles');
+    const rows = parseCSV(text).filter(r => r.length > 1);
+    const roles = {};
+    rows.slice(1).forEach(cols => {
+      const name = (cols[0]||'').trim();
+      const tasks = (cols[1]||'').trim();
+      if (name) roles[name] = tasks;
+    });
+    const normalized = {};
+    Object.entries(roles).forEach(([name, tasks]) => { normalized[normName(name)] = tasks; });
+    ROLES = normalized;
+  } catch (err) {
+    console.error('Greška pri učitavanju Tim taba:', err);
+  }
+}
+
+async function loadData() {
+  const statusEl = document.getElementById('sync-status');
+  try {
+    const { text, live } = await getCSV(SHEET_CSV_URL, 'sheet');
+    const rows = parseCSV(text).filter(r => r.length > 1);
+    const dataRows = rows.slice(1).filter(r => (r[1]||'').trim());
+    CLIENTS = dataRows.map((cols, idx) => mapRowToClient(cols, idx));
+    await Promise.all([loadRoles(), loadWorkflows()]);
+    if (statusEl) {
+      statusEl.style.color = 'rgba(255,255,255,.35)';
+      statusEl.textContent = live
+        ? `Kostur · ${CLIENTS.length} praznih klijenata`
+        : `Kostur · ${CLIENTS.length} praznih klijenata`;
+    }
+  } catch (err) {
+    console.error('Greška pri učitavanju Sheet-a:', err);
+    if (statusEl) {
+      statusEl.style.color = 'var(--terra)';
+      statusEl.textContent = 'Greška pri učitavanju podataka — Sheet mora biti deljen kao "Anyone with the link: Viewer"';
+    }
+  }
+  renderKPIs(); renderEmpChips(); renderGrid(); renderCards();
+}
+
+// ─────────────────────────────────────────────────────────────
+//  STATE
+// ─────────────────────────────────────────────────────────────
+let activePkg = 'ALL';
+let activeEmp = null;
+let searchQ   = '';
+
+// ─────────────────────────────────────────────────────────────
+//  HELPERS
+// ─────────────────────────────────────────────────────────────
+function empStyle(name, size) {
+  const e = EMP[name] || {i: name.slice(0,2).toUpperCase(), c:'#fff', bg:'#888'};
+  return `background:${e.bg};color:${e.c};width:${size}px;height:${size}px;font-size:${Math.round(size*0.37)}px`;
+}
+function avHtml(name, size) {
+  const e = EMP[name] || {i: name.slice(0,2).toUpperCase(), c:'#fff', bg:'#888'};
+  return `<div class="av" style="${empStyle(name,size)}" title="${name}">${e.i}</div>`;
+}
+function pillHtml(name) {
+  const e = EMP[name] || {i: name.slice(0,2).toUpperCase(), c:'#fff', bg:'#888'};
+  return `<div class="pill"><div class="av" style="${empStyle(name,18)}">${e.i}</div>${name}</div>`;
+}
+// Editor avatar sa malim "S" markerom za support editora (na kartici)
+function avHtmlEd(e, size) {
+  const base = avHtml(e.name, size);
+  return e.support
+    ? `<span class="ed-av sup" title="${e.name} · support editor">${base}</span>`
+    : base;
+}
+// Editor pill sa primary/support oznakom (u draweru)
+function editorPills(meta) {
+  if (!meta || !meta.length) return '<span class="no-data">—</span>';
+  return meta.map(e =>
+    `<span class="pill-wrap">${pillHtml(e.name)}<span class="ed-tag ${e.support?'sup':'pri'}">${e.support?'support':'primary'}</span></span>`
+  ).join('');
+}
+function realMembers(arr) { return (arr||[]).filter(m => m && m !== '—'); }
+function involves(c, emp) { return [c.smm,c.creator,c.editor,c.designer].flat().includes(emp); }
+function pkgFull(p) { return {MA:'Paket A',MT:'Paket B',CC:'Paket C',PR:'Paket D'}[p]||p; }
+function pkgShort(p){ return {MA:'A',MT:'B',CC:'C',PR:'D'}[p]||p; }
+
+// ─────────────────────────────────────────────────────────────
+//  FILTER
+// ─────────────────────────────────────────────────────────────
+function filtered() {
+  return CLIENTS.filter(c => {
+    if (activePkg !== 'ALL' && c.pkg !== activePkg) return false;
+    if (activeEmp && !involves(c, activeEmp)) return false;
+    // Kad je izabrana osoba (personal dashboard), bivši klijenti se ne prikazuju
+    if (activeEmp && c.status === 'inactive') return false;
+    if (searchQ && !c.name.toLowerCase().includes(searchQ.toLowerCase())) return false;
+    return true;
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
+//  WORKFLOW GUIDE-OVI — dinamički iz "Workflows" taba u Sheet-u
+// ─────────────────────────────────────────────────────────────
+let WORKFLOWS = [];
+
+async function loadWorkflows() {
+  try {
+    const { text } = await getCSV(WORKFLOWS_CSV_URL, 'workflows');
+    const rows = parseCSV(text).filter(r => r.length > 1);
+    WORKFLOWS = rows.slice(1).map(cols => ({
+      title: (cols[0]||'').trim(),
+      steps: cols.slice(1).map(s => (s||'').trim()).filter(Boolean),
+    })).filter(wf => wf.title);
+  } catch (err) {
+    console.error('Greška pri učitavanju Workflows taba:', err);
+  }
+}
+
+function countActive(pkg) {
+  return CLIENTS.filter(c => c.status==='active' && (pkg==='ALL' || c.pkg===pkg)).length;
+}
+
+// ─────────────────────────────────────────────────────────────
+//  RENDER KPIs
+// ─────────────────────────────────────────────────────────────
+function renderKPIs() {
+  const act = CLIENTS.filter(c=>c.status==='active').length;
+  const old = CLIENTS.filter(c=>c.status==='inactive').length;
+  document.getElementById('kpis').innerHTML = [
+    ['Aktivni klijenti', act,                false, true],
+    ['Paket A',          countActive('MA'),  false, false],
+    ['Paket B',          countActive('MT'),  false, false],
+    ['Paket C',          countActive('CC'),  false, false],
+    ['Bivši klijenti',   old,                true,  false],
+    ['Tim',              Object.values(EMP).filter(e=>e.active).length, false, false],
+  ].map(([lbl,val,dim,terra]) =>
+    `<div class="kpi${dim?' dim':''}">
+       <div class="lbl">${lbl}</div>
+       <div class="val${terra?' terra':''}">${val}</div>
+     </div>`
+  ).join('');
+}
+
+// ─────────────────────────────────────────────────────────────
+//  RENDER EMP CHIPS
+// ─────────────────────────────────────────────────────────────
+function renderEmpChips() {
+  document.getElementById('emp-chips').innerHTML = Object.entries(EMP)
+    .filter(([,e]) => e.active)
+    .map(([name,e]) =>
+      `<button class="emp-chip${activeEmp===name?' active':''}" onclick="openPersonal('${name}')" title="Otvori personalni dashboard">
+         <div class="av" style="background:${e.bg};color:${e.c};width:20px;height:20px;font-size:7.5px">${e.i}</div>
+         ${name}
+       </button>`
+    ).join('');
+}
+
+// ─────────────────────────────────────────────────────────────
+//  RENDER GRID
+// ─────────────────────────────────────────────────────────────
+function renderGrid() {
+  ['ALL','MA','MT','CC','PR'].forEach(p => {
+    const el = document.getElementById('ct-'+p);
+    if (el) el.textContent = countActive(p);
+  });
+
+  const list     = filtered();
+  const active   = list.filter(c => c.status === 'active');
+  const inactive = list.filter(c => c.status === 'inactive');
+
+  const parts = [];
+  if (activePkg !== 'ALL') parts.push(pkgFull(activePkg));
+  if (activeEmp) parts.push(activeEmp);
+  if (searchQ) parts.push(`"${searchQ}"`);
+
+  const aT = active.length   ? `<strong>${active.length}</strong> aktiv${active.length===1?'an':'nih'}` : '';
+  const iT = inactive.length ? `<span style="opacity:.5">${inactive.length} bivš${inactive.length===1?'i':'ih'}</span>` : '';
+  document.getElementById('res-txt').innerHTML    = [aT,iT].filter(Boolean).join(' · ') || '0 klijenata';
+  document.getElementById('res-filter').textContent = parts.length ? 'Filter: '+parts.join(' · ') : '';
+
+  if (!list.length) {
+    document.getElementById('grid').innerHTML = '<div class="empty">Nema klijenata koji odgovaraju filteru.</div>';
+    return;
+  }
+
+  let html = active.map(c => cardHtml(c)).join('');
+  if (inactive.length) {
+    html += `<div class="sec-div">Bivši klijenti</div>`;
+    html += inactive.map(c => cardHtml(c)).join('');
+  }
+  document.getElementById('grid').innerHTML = html;
+}
+
+function cardHtml(c) {
+  const roles = [
+    {lbl:'SMM',     avs: realMembers(c.smm).map(m=>avHtml(m,22)).join('')},
+    {lbl:'Creator', avs: realMembers(c.creator).map(m=>avHtml(m,22)).join('')},
+    {lbl:'Editor',  avs: c.editorMeta.map(e=>avHtmlEd(e,22)).join('')},
+    {lbl:'Designer',avs: realMembers(c.designer).map(m=>avHtml(m,22)).join('')},
+  ].filter(r => r.avs);
+
+  const teamHtml = roles.length ? `<div class="team-grid">${roles.map(r=>
+    `<div class="role-row">
+       <div class="role-lbl">${r.lbl}</div>
+       <div class="role-avs">${r.avs}</div>
+     </div>`).join('')}</div>` : '';
+
+  const swHtml = c.colors.length
+    ? `<div class="swatches">${c.colors.map(col=>`<div class="sw" style="background:${col}" title="${col}"></div>`).join('')}</div>`
+    : `<div></div>`;
+
+  return `<div class="card p-${c.pkg}${c.status==='inactive'?' inactive':''}" onclick="openDrawer(${c.id})">
+    <div class="card-head">
+      <div class="cname">${c.name}</div>
+      <div style="display:flex;gap:5px;align-items:center;flex-shrink:0">
+        ${c.status==='inactive'?'<div class="badge bivsi">Bivši</div>':''}
+        ${c.grad?`<div class="badge bivsi">${c.grad}</div>`:''}
+        <div class="badge p-${c.pkg}">${pkgShort(c.pkg)}</div>
+      </div>
+    </div>
+    ${c.platforms.length?`<div class="platforms">${c.platforms.map(p=>`<div class="plat">${p}</div>`).join('')}</div>`:''}
+    ${teamHtml}
+    <div class="card-foot">${swHtml}<div class="start">od ${c.start}</div></div>
+  </div>`;
+}
+
+// ─────────────────────────────────────────────────────────────
+//  DRAWER
+// ─────────────────────────────────────────────────────────────
+function openDrawer(id) {
+  const c = CLIENTS.find(x => x.id === id);
+  if (!c) return;
+
+  const membersHtml = arr => { const m = realMembers(arr); return m.length ? m.map(pillHtml).join('') : '<span class="no-data">—</span>'; };
+  const teamRows = [
+    {role:'Social Media Manager', html: membersHtml(c.smm)},
+    {role:'Content Creator',      html: membersHtml(c.creator)},
+    {role:'Video Editor',         html: editorPills(c.editorMeta)},
+    {role:'Designer',             html: membersHtml(c.designer)},
+  ];
+
+  const paletteHtml = c.colors.length ? `
+    <div class="d-section">
+      <div class="d-sec-lbl">Brand boje</div>
+      <div class="palette">
+        ${c.colors.map(col=>`<div class="pal-sw"><div class="block" style="background:${col}"></div><div class="hex">${col}</div></div>`).join('')}
+      </div>
+    </div>` : '';
+
+  document.getElementById('d-content').innerHTML = `
+    ${c.status==='inactive'?'<div class="bivsi-banner">Bivši klijent — saradnja završena</div>':''}
+    <div style="display:flex;gap:6px;margin-bottom:10px">
+      ${c.status==='inactive'?'<div class="badge bivsi">Bivši</div>':''}
+      <div class="badge p-${c.pkg}">${pkgFull(c.pkg)}</div>
+    </div>
+    <div class="d-title">${c.name}</div>
+    <div class="d-section">
+      <div class="d-sec-lbl">Detalji</div>
+      ${c.grad?`<div class="d-row"><span class="d-key">Grad</span><span class="d-val">${c.grad}</span></div>`:''}
+      <div class="d-row"><span class="d-key">Platforme</span><span class="d-val">${c.platforms.join(', ')||'—'}</span></div>
+      <div class="d-row"><span class="d-key">Content</span><span class="d-val">${c.content}</span></div>
+      <div class="d-row"><span class="d-key">Storije</span><span class="d-val">${c.stories||'—'}</span></div>
+      <div class="d-row"><span class="d-key">Početak saradnje</span><span class="d-val">${c.start}</span></div>
+      ${c.fonts?`<div class="d-row"><span class="d-key">Fontovi</span><span class="d-val">${c.fonts}</span></div>`:''}
+    </div>
+    <div class="d-section">
+      <div class="d-sec-lbl">Tim</div>
+      <div class="team-d">
+        ${teamRows.map(r=>`
+          <div class="team-d-row">
+            <div class="team-d-role">${r.role}</div>
+            <div class="team-d-members">${r.html}</div>
+          </div>`).join('')}
+      </div>
+    </div>
+    ${paletteHtml}
+  `;
+
+  document.getElementById('overlay').classList.add('open');
+  document.getElementById('drawer').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeDrawer() {
+  document.getElementById('overlay').classList.remove('open');
+  document.getElementById('drawer').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// ─────────────────────────────────────────────────────────────
+//  FILTER ACTIONS
+// ─────────────────────────────────────────────────────────────
+function setPkg(btn, pkg) {
+  activePkg = pkg;
+  document.querySelectorAll('[data-pkg]').forEach(b =>
+    b.classList.toggle('active', b.dataset.pkg === pkg));
+  renderGrid();
+}
+function setSearch(val) { searchQ = val.trim(); renderGrid(); }
+
+document.addEventListener('keydown', e => {
+  if (e.key !== 'Escape') return;
+  if (activeEmp) closePersonal();
+  else closeDrawer();
+});
+
+// ═════════════════════════════════════════════════════════════
+//  PERSONALNI DASHBOARD — in-place, izlazi na dole (bez tabova / nove strane)
+// ═════════════════════════════════════════════════════════════
+function clientsOf(name){ return CLIENTS.filter(c => c.status==='active' && involves(c, name)); }
+function myRolesOn(c, name){
+  const r = [];
+  if (c.smm.includes(name))      r.push('SMM');
+  if (c.creator.includes(name))  r.push('Creator');
+  if (c.editor.includes(name))   r.push('Editor');
+  if (c.designer.includes(name)) r.push('Dizajn');
+  return r;
+}
+
+// Formatira zaduženja iz „Tim" taba — boldira kategorije, svaka u svom redu
+function formatZaduzenja(text, role){
+  let t = (text||'').trim();
+  if (!t) return '<span class="no-data">Zaduženja nisu uneta u „Tim" tab.</span>';
+  if (role && t.toLowerCase().startsWith(role.toLowerCase()))
+    t = t.slice(role.length).replace(/^[.\s–-]+/, '');
+  const parts = t.split(/\.\s+(?=[A-ZČĆŠĐŽ0-9])/);
+  return parts.map(seg => {
+    seg = seg.trim(); if (!seg) return '';
+    if (!/[.!?]$/.test(seg)) seg += '.';
+    const ci = seg.indexOf(':');
+    if (ci > 0 && ci < 55) return `<div class="pp-zrow"><strong>${seg.slice(0,ci)}:</strong>${seg.slice(ci+1)}</div>`;
+    return `<div class="pp-zrow">${seg}</div>`;
+  }).join('');
+}
+
+
+function openPersonal(name){
+  activeEmp = name;
+  renderEmpChips();
+  renderPersonal(name);
+  document.getElementById('results-meta').style.display = 'none';
+  document.getElementById('grid').style.display = 'none';
+  document.getElementById('profile-panel').scrollIntoView({behavior:'smooth', block:'start'});
+}
+function closePersonal(){
+  activeEmp = null;
+  renderEmpChips();
+  document.getElementById('profile-panel').innerHTML = '';
+  document.getElementById('results-meta').style.display = '';
+  document.getElementById('grid').style.display = '';
+  renderGrid();
+}
+
+function renderPersonal(name){
+  const e = EMP[name] || {i:name.slice(0,2).toUpperCase(), c:'#fff', bg:'#888', role:''};
+  const cls = clientsOf(name);
+  const counts = [
+    ['Aktivnih profila', cls.length, true],
+    ['Kao SMM',     cls.filter(c=>c.smm.includes(name)).length],
+    ['Kao Creator', cls.filter(c=>c.creator.includes(name)).length],
+    ['Kao Editor',  cls.filter(c=>c.editor.includes(name)).length],
+    ['Kao Dizajn',  cls.filter(c=>c.designer.includes(name)).length],
+  ].filter(([,v],i)=>i===0||v>0);
+
+  const clientCards = cls.length ? cls.map(c=>{
+    const mine = myRolesOn(c, name);
+    return `<div class="pp-cl p-${c.pkg}" onclick="openDrawer(${c.id})">
+      <div class="pp-cl-name">${c.name}</div>
+      <div class="pp-cl-meta">${pkgFull(c.pkg)}${c.grad?` · ${c.grad}`:''}</div>
+      <div class="pp-cl-roles">${mine.map(r=>`<span class="pp-cl-role">${r}</span>`).join('')}</div>
+      <div class="pp-cl-fr"><b>Content:</b> ${c.content||'—'} &nbsp;·&nbsp; <b>Storije:</b> ${c.stories||'—'}</div>
+    </div>`;
+  }).join('') : '<div class="no-data">Trenutno nema dodeljenih aktivnih klijenata u bazi.</div>';
+
+  document.getElementById('profile-panel').innerHTML = `
+    <div class="pp">
+      <div class="pp-bar">
+        <div class="pp-id">
+          <div class="av" style="${empStyle(name,46)}">${e.i}</div>
+          <div><div class="pp-name">${name}</div><div class="pp-role">${e.role||''}</div></div>
+        </div>
+        <button class="pp-close" onclick="closePersonal()">× Zatvori</button>
+      </div>
+
+      <div class="pp-stats">
+        ${counts.map(([l,v,terra])=>`<div class="pp-stat"><div class="lbl">${l}</div><div class="val${terra?' terra':''}">${v}</div></div>`).join('')}
+      </div>
+
+      <div class="pp-sec" id="pf-sec"></div>
+
+      <div class="pp-sec">
+        <div class="pp-sec-h">Zaduženja</div>
+        <div class="pp-zad">${formatZaduzenja(ROLES[name], e.role)}</div>
+      </div>
+
+      <div class="pp-sec">
+        <div class="pp-sec-h">Klijenti · ${cls.length}</div>
+        <div class="pp-clients">${clientCards}</div>
+      </div>
+
+    </div>`;
+
+  pfMonth = null; pfWeek = null;
+  renderPerf(name);
+}
+
+// ─────────────────────────────────────────────────────────────
+//  GLOBALNA KARTICA — workflow (jednom za ceo tim, ne po osobi)
+// ─────────────────────────────────────────────────────────────
+function renderCards(){
+  const box = document.getElementById('global-cards');
+  if (!box) return;
+
+  const wfBody = WORKFLOWS.length
+    ? WORKFLOWS.map((wf,i)=>`
+        <details class="wf"${i===0?' open':''}>
+          <summary>${wf.title}<span class="wf-count">${wf.steps.length} koraka</span></summary>
+          <div class="flow">${wf.steps.map((s,si)=>`
+            <div class="flow-step">
+              <div class="flow-num">${si+1}</div>
+              <div class="flow-card">${s}</div>
+            </div>`).join('')}</div>
+        </details>`).join('')
+    : '<div class="no-data">Workflowovi se učitavaju iz „Workflows" taba u bazi.</div>';
+
+  box.innerHTML = `
+    <details class="card">
+      <summary><div><div class="card-t">Workflow</div>
+        <div class="card-s">${WORKFLOWS.length} procesa · isto za ceo tim</div></div>
+        <span class="card-x">+</span></summary>
+      <div class="card-b">${wfBody}</div>
+    </details>`;
+}
+
+// ─────────────────────────────────────────────────────────────
+//  PERFORMANSE — po osobi, mesečno i nedeljno
+// ─────────────────────────────────────────────────────────────
+const MES_SR = ['januar','februar','mart','april','maj','jun',
+                'jul','avgust','septembar','oktobar','novembar','decembar'];
+let pfMode = 'm', pfMonth = null, pfWeek = null;
+
+function mesLabel(k){ const [g,m] = k.split('-'); return `${MES_SR[+m-1]} ${g}`; }
+
+// Pomeranja roka — ne dolaze iz ClickUp-a nego iz naših snimaka (clickup_istorija.json).
+// Zato ovaj spisak raste tek od drugog pokretanja sync-a nadalje.
+function pomereniBlok(name){
+  if (!CLICKUP || !CLICKUP.pomeranja) return '';
+  const moji = CLICKUP.pomeranja.filter(p => (p.p || []).includes(name) && p.m === pfMonth);
+  if (!moji.length && !CLICKUP.pomeranja.length) {
+    return `<details class="pf-group"><summary>Pomeren rok<span class="n">0</span></summary>
+      <div class="pf-none">Prati se od ${CLICKUP.istorijaOd}. Prvi snimak je početno stanje,
+      pomeranja se hvataju od sledećeg osvežavanja.</div></details>`;
+  }
+  return `<details class="pf-group"${moji.length ? '' : ''}>
+    <summary>Pomeren rok<span class="n">${moji.length}</span></summary>
+    ${moji.length ? `<div class="pf-list">${moji.map(p => `
+      <div class="pf-row moved">
+        <span class="tn">${p.n}</span>
+        <span class="cl">${p.c}</span>
+        <span class="dd">${p.staro} → ${p.novo}</span>
+      </div>`).join('')}</div>`
+      : '<div class="pf-none">Nijedan rok nije pomeren u ovom mesecu.</div>'}
+  </details>`;
+}
+
+function pfSetMode(mode, name){ pfMode = mode; pfWeek = null; renderPerf(name); }
+function pfSetMonth(m, name){ pfMonth = m; pfWeek = null; renderPerf(name); }
+function pfSetWeek(w, name){ pfWeek = w; renderPerf(name); }
+
+function renderPerf(name){
+  const box = document.getElementById('pf-sec');
+  if (!box) return;
+
+  if (!CLICKUP) {
+    box.innerHTML = `<div class="pp-sec-h">Performanse</div>
+      <div class="pf-warn">Ovde stoje zadaci iz vašeg ClickUp-a: šta je urađeno, šta kasni,
+      i koliko je toga na kome. U kosturu je prazno.</div>
+      <div class="kostur-red"></div><div class="kostur-red"></div><div class="kostur-red"></div>`;
+    return;
+  }
+
+  const svi = CLICKUP.zadaci.filter(z => z.p === name);
+  if (!svi.length) {
+    box.innerHTML = `<div class="pp-sec-h">Performanse</div>
+      <div class="pf-warn">Nema taskova u ClickUp-u za ovo ime.
+      Moguće je da se u ClickUp-u zove drugačije nego ovde.</div>`;
+    return;
+  }
+
+  // Mesec se bira uvek. Nedelje su nedelje unutar izabranog meseca.
+  const meseci = [...new Set(svi.map(z => z.m))].sort();
+  const d = new Date();
+  const tekuci = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}`;
+  if (!pfMonth || !meseci.includes(pfMonth))
+    pfMonth = meseci.includes(tekuci) ? tekuci : meseci[meseci.length - 1];
+
+  const uMesecu = svi.filter(z => z.m === pfMonth);
+  const nedelje = [...new Map(uMesecu.filter(z => z.w).map(z => [z.w, z.wl])).entries()].sort();
+  if (pfMode === 'w' && (!pfWeek || !nedelje.some(([k]) => k === pfWeek))) {
+    // podrazumevano tekuća nedelja, ako je u ovom mesecu; inače poslednja koja ima taskove
+    const t = new Date(Date.UTC(d.getFullYear(), d.getMonth(), d.getDate()));
+    t.setUTCDate(t.getUTCDate() + 4 - (t.getUTCDay() || 7));
+    const nw = Math.ceil(((t - new Date(Date.UTC(t.getUTCFullYear(), 0, 1))) / 86400000 + 1) / 7);
+    const sada = `${t.getUTCFullYear()}-W${String(nw).padStart(2, '0')}`;
+    const puna = [...nedelje].reverse().find(([k]) => uMesecu.some(z => z.w === k));
+    pfWeek = nedelje.some(([k]) => k === sada) ? sada : (puna ? puna[0] : null);
+  }
+
+  const izb = pfMode === 'm' ? uMesecu : uMesecu.filter(z => z.w === pfWeek);
+  const br  = s => izb.filter(z => z.s === s).length;
+  const posted = br('posted'), done = br('done'), notdone = br('notdone');
+  const kasni  = izb.filter(z => z.l > 0);
+  const kasnoZavrseno = izb.filter(z => z.k > 0);
+  const uk     = izb.length;
+  // "Odrađeno" = od svega čemu je rok već stigao. Ono što tek dolazi se ne broji.
+  const dospelo = posted + done + notdone + kasni.length;
+  const proc   = dospelo ? Math.round((posted + done) / dospelo * 100) : null;
+  const solo   = izb.filter(z => z.solo).length;
+
+  const dugMeseci = [...meseci].reverse().map(p =>
+    `<button class="${p === pfMonth ? 'on' : ''}" onclick="pfSetMonth('${p}','${name}')">${mesLabel(p)}</button>`).join('');
+
+  const dugNedelja = pfMode === 'w'
+    ? `<div class="pf-per pf-per2">${
+        nedelje.length
+          ? nedelje.map(([k, l]) =>
+              `<button class="${k === pfWeek ? 'on' : ''}" onclick="pfSetWeek('${k}','${name}')">${l}</button>`).join('')
+          : '<span class="pf-nowk">Nema nedelja sa rokom u ovom mesecu.</span>'}</div>`
+    : '';
+
+  const traka = uk ? `
+    <div class="pf-bar">
+      <i style="width:${posted / uk * 100}%;background:var(--charcoal)"></i>
+      <i style="width:${done / uk * 100}%;background:#2E7A3A"></i>
+      <i style="width:${notdone / uk * 100}%;background:var(--terra-dk)"></i>
+      <i style="width:${kasni.length / uk * 100}%;background:var(--terra)"></i>
+      <i style="width:${(uk - posted - done - notdone - kasni.length) / uk * 100}%;background:var(--cream3)"></i>
+    </div>
+    <div class="pf-legend">
+      <span><b>■</b> posted ${posted}</span>
+      <span><b style="color:#2E7A3A">■</b> done ${done}</span>
+      <span><b style="color:var(--terra-dk)">■</b> not done ${notdone}</span>
+      <span><b style="color:var(--terra)">■</b> probijen rok ${kasni.length}</span>
+      <span><b style="color:var(--cream3)">■</b> rok još nije stigao ${uk - posted - done - notdone - kasni.length}</span>
+    </div>` : '';
+
+  const red = z => `<div class="pf-row${z.l > 0 ? ' late' : (z.k > 0 ? ' slip' : '')}">
+      <span class="tn">${z.n || '(bez naziva)'}</span>
+      <span class="cl">${z.c}</span>
+      <span class="dd">${
+        z.l > 0 ? `${z.d} · ${z.l}d`
+        : z.k > 0 ? `rok ${z.d} → ${z.dd} · ${z.k}d`
+        : (z.d || '—')}</span>
+    </div>`;
+
+  // ton: 'hot' = crveno (nije odrađeno), 'warm' = žuto (odrađeno, ali kasno), '' = neutralno
+  const grupa = (naslov, redovi, ton) => `
+    <details class="pf-group${ton ? ' ' + ton : ''}"${ton && redovi.length ? ' open' : ''}>
+      <summary>${naslov}<span class="n">${redovi.length}</span></summary>
+      ${redovi.length
+        ? `<div class="pf-list">${redovi.map(red).join('')}</div>`
+        : `<div class="pf-none">Ništa ovde. 🎉</div>`}
+    </details>`;
+
+  box.innerHTML = `
+    <div class="pp-sec-h">Performanse · ClickUp</div>
+
+    <div class="pf-per">
+      <button class="${pfMode === 'm' ? 'on' : ''}" onclick="pfSetMode('m','${name}')">Mesečno</button>
+      <button class="${pfMode === 'w' ? 'on' : ''}" onclick="pfSetMode('w','${name}')">Nedeljno</button>
+      <span class="sep"></span>${dugMeseci}
+    </div>
+    ${dugNedelja}
+
+    <div class="pp-stats">
+      <div class="pp-stat pf-stat"><div class="lbl">Ukupno taskova</div><div class="val">${uk}</div></div>
+      <div class="pp-stat pf-stat"><div class="lbl">Posted</div><div class="val">${posted}</div></div>
+      <div class="pp-stat pf-stat"><div class="lbl">Done</div><div class="val">${done}</div></div>
+      <div class="pp-stat pf-stat"><div class="lbl">Not done</div><div class="val${notdone ? ' red' : ''}">${notdone}</div></div>
+      <div class="pp-stat pf-stat${kasni.length ? ' alarm' : ''}"><div class="lbl">Probijen rok</div>
+        <div class="val${kasni.length ? ' red' : ''}">${kasni.length}</div></div>
+      <div class="pp-stat pf-stat${kasnoZavrseno.length ? ' upoz' : ''}"><div class="lbl">Sa zakašnjenjem</div>
+        <div class="val${kasnoZavrseno.length ? ' zuto' : ''}">${kasnoZavrseno.length}</div></div>
+      <div class="pp-stat pf-stat"><div class="lbl">Odrađeno</div>
+        <div class="val terra">${proc === null ? '—' : proc + '%'}</div></div>
+    </div>
+
+    ${traka}
+
+    ${grupa('⚠️ Probijen rok', kasni.sort((a, b) => b.l - a.l), 'hot')}
+    ${grupa('Nije urađeno', izb.filter(z => z.s === 'notdone'), 'hot')}
+    ${grupa('Urađeno posle roka', kasnoZavrseno.sort((a, b) => b.k - a.k), 'warm')}
+    ${grupa('Posted', izb.filter(z => z.s === 'posted'), '')}
+    ${grupa('Done', izb.filter(z => z.s === 'done'), '')}
+    ${grupa('Još u toku', izb.filter(z => z.s === 'active' && z.l === 0), '')}
+    ${pomereniBlok(name)}`;
+}
+
+// ─────────────────────────────────────────────────────────────
+//  INIT
+// ─────────────────────────────────────────────────────────────
+document.getElementById('today').textContent =
+  new Date().toLocaleDateString('sr-Latn-RS', {day:'numeric',month:'long',year:'numeric'});
+
+loadData();
+</script>
+</body>
+</html>
