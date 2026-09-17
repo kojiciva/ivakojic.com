@@ -2,6 +2,16 @@
 <html lang="sr">
 <head>
 <meta charset="UTF-8">
+<script>
+/* Kompjuter otvara stari sajt, telefon ostaje na dva dugmeta.
+   ?m=1 uvek otvara ovu, mobilnu verziju. */
+(function () {
+  if (/[?&]m=1(&|$)/.test(location.search)) return;
+  if (window.matchMedia && matchMedia("(min-width: 900px) and (hover: hover)").matches) {
+    location.replace("/en/about/?from=home" + location.hash);
+  }
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Iva Kojić · AI za ljude i firme</title>
 <meta name="description" content="Iva Kojić. Učim ljude da koriste AI i uvodim AI u procese firmi.">

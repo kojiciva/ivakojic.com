@@ -2,6 +2,14 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<script>
+/* Ako je posetilac stigao sa početne na kompjuteru, adresa ostaje ivakojic.com */
+(function () {
+  if (/[?&]from=home(&|$)/.test(location.search) && history.replaceState) {
+    history.replaceState(null, "", "/" + location.hash);
+  }
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="Iva Kojić — keynote speaker, moderator and workshop host on the human side of AI.">
 <title>Iva Kojić — The Human Side of AI</title>
@@ -204,8 +212,8 @@ select.inp{cursor:pointer;}
       <h1 class="hero-title"><span>IVA</span><span class="stroke">KOJIĆ</span></h1>
       <p class="tagline">The <em>Human Side</em> of AI.</p>
       <div class="actions">
-        <a href="#contact" class="btn btn-p">Book me to speak →</a>
-        <a href="#onstage" class="btn btn-g">See the stage</a>
+        <a href="/en/companies/" class="btn btn-p">For companies →</a>
+        <a href="https://preply.in/IVA6EN41435190112?ts=17894594" class="btn btn-g" target="_blank" rel="noopener">Learn AI 1:1</a>
       </div>
       <div class="stats">
         <div class="stat"><b>100+</b><span>startups worked with</span></div><div class="divider"></div>
