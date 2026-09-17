@@ -1,0 +1,116 @@
+/* ivakojic.com · zajednički stil za sve strane levka
+   Paleta i ritam preuzeti iz ulaz.html (14.9.2026). */
+:root{
+  --bg:#15100F;
+  --surface:#1E1715;
+  --card:#261C1A;
+  --border:#392A27;
+  --wine:#6B2D3E;
+  --wine-lift:#8A3B50;
+  --copper:#C77D4F;
+  --copper-lift:#E09666;
+  --tp:#F1E8E2;
+  --ts:#B29C93;
+  --tm:#7C6960;
+  --serif:Georgia,'Times New Roman',serif;
+  --sans:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  --step:clamp(1rem,4vw,1.5rem);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--tp);font-family:var(--sans);
+     font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:var(--copper-lift)}
+a:hover{color:var(--tp)}
+
+.wrap{max-width:46rem;margin:0 auto;padding:var(--step) var(--step) 3rem;
+      display:flex;flex-direction:column;gap:2rem}
+
+/* ── vrh ── */
+.top{display:flex;align-items:center;gap:1rem;padding-top:.5rem}
+.top a{text-decoration:none;color:inherit;display:flex;align-items:center;gap:1rem}
+.portret{width:3.5rem;height:3.5rem;flex:none;border-radius:50%;object-fit:cover;
+         object-position:50% 20%;border:1px solid var(--border)}
+.ime{font-family:var(--serif);font-size:1.35rem;line-height:1.1;margin:0}
+.tag{margin:.15rem 0 0;color:var(--ts);font-size:.9rem}
+.jezik{margin-left:auto;font-size:.8rem;color:var(--tm);text-decoration:none;
+       border:1px solid var(--border);border-radius:2px;padding:.25rem .5rem}
+
+/* ── naslovi ── */
+h1{font-family:var(--serif);font-weight:400;font-size:clamp(1.8rem,7vw,2.6rem);
+   line-height:1.15;margin:0;text-wrap:balance}
+h2{font-family:var(--serif);font-weight:400;font-size:1.35rem;line-height:1.25;margin:0}
+.lede{color:var(--ts);font-size:1.02rem;margin:.75rem 0 0;max-width:38ch}
+.eyebrow{font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--copper);margin:0 0 .6rem}
+
+/* ── dvoja vrata ── */
+.doors{display:grid;gap:.85rem}
+@media(min-width:40rem){.doors{grid-template-columns:1fr 1fr}}
+.door{display:flex;flex-direction:column;gap:.35rem;text-decoration:none;color:var(--tp);
+      background:var(--card);border:1px solid var(--border);border-left:3px solid var(--accent);
+      border-radius:3px;padding:1.4rem 1.2rem;min-height:9rem;
+      transition:background .18s ease,border-color .18s ease}
+.door:hover{background:var(--surface);border-color:var(--accent);color:var(--tp)}
+.door:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.door-a{--accent:var(--wine-lift)}
+.door-b{--accent:var(--copper)}
+.door-label{font-size:.78rem;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);font-weight:600}
+.door-title{font-family:var(--serif);font-size:1.45rem;line-height:1.2}
+.door-sub{color:var(--ts);font-size:.92rem;margin-top:auto}
+
+/* ── dugmad ── */
+.cta{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
+     font:inherit;font-weight:600;letter-spacing:.08em;text-transform:uppercase;font-size:.85rem;
+     text-decoration:none;border:1px solid transparent;border-radius:2px;
+     padding:.95rem 1.3rem;cursor:pointer;transition:background .18s ease}
+.cta-copper{background:var(--copper);color:#20160F}
+.cta-copper:hover{background:var(--copper-lift);color:#20160F}
+.cta-ghost{background:none;border-color:var(--border);color:var(--ts)}
+.cta-ghost:hover{border-color:var(--ts);color:var(--tp)}
+.cta:focus-visible{outline:2px solid var(--tp);outline-offset:2px}
+.cta-full{width:100%}
+
+/* ── dokazi ── */
+.proof{display:grid;gap:.75rem;margin:0;padding:0;list-style:none}
+@media(min-width:40rem){.proof{grid-template-columns:repeat(3,1fr)}}
+.proof li{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:1rem}
+.proof b{display:block;font-family:var(--serif);font-weight:400;font-size:1.6rem;color:var(--copper-lift);line-height:1.1}
+.proof span{display:block;color:var(--ts);font-size:.88rem;margin-top:.35rem}
+
+/* ── koraci ── */
+.steps{counter-reset:k;margin:0;padding:0;list-style:none;display:grid;gap:.9rem}
+.steps li{counter-increment:k;display:grid;grid-template-columns:2rem 1fr;gap:.75rem;align-items:start}
+.steps li::before{content:counter(k,decimal-leading-zero);color:var(--copper);
+                  font-variant-numeric:tabular-nums;font-size:.85rem;padding-top:.15rem}
+.steps b{display:block;font-weight:600}
+.steps span{color:var(--ts);font-size:.94rem}
+
+/* ── panel i forma ── */
+.panel{background:var(--surface);border:1px solid var(--border);border-top:2px solid var(--copper);
+       border-radius:3px;padding:1.35rem 1.15rem 1.5rem;display:flex;flex-direction:column;gap:1.1rem}
+.q{display:flex;flex-direction:column;gap:.45rem}
+.q label{font-size:.98rem;line-height:1.35}
+.q-num{color:var(--copper);font-variant-numeric:tabular-nums;margin-right:.4rem;font-size:.85rem}
+input[type="text"],input[type="number"],textarea{font:inherit;color:var(--tp);background:var(--bg);
+  border:1px solid var(--border);border-radius:2px;padding:.7rem .75rem;width:100%;resize:vertical}
+input:focus,textarea:focus{outline:none;border-color:var(--copper)}
+.note{font-size:.82rem;color:var(--tm);margin:0}
+.calendar{border:1px solid var(--border);border-radius:3px;overflow:hidden;background:#fff}
+.calendar iframe{display:block;width:100%;height:760px;border:0}
+[hidden]{display:none!important}
+
+/* ── tekst ── */
+.prose p{margin:0 0 1rem;color:var(--ts);max-width:62ch}
+.prose h2{margin:1.8rem 0 .6rem;color:var(--tp)}
+.prose ul{color:var(--ts);padding-left:1.1rem;margin:0 0 1rem}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:3px;padding:1.2rem}
+.card p{white-space:pre-line}
+
+/* ── dno ── */
+footer{border-top:1px solid var(--border);padding-top:1rem;color:var(--tm);font-size:.82rem;
+       display:flex;flex-wrap:wrap;gap:.4rem 1.1rem}
+footer a{color:var(--ts);text-decoration:none}
+footer a:hover{color:var(--tp)}
+
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}

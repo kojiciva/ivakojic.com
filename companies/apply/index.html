@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="sr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3 pitanja · Iva Kojić</title>
+<meta name="description" content="Tri pitanja o procesu koji želite da ubrzate, pa razgovor.">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <a href="/">
+      <img class="portret" src="/media/iva.jpg" alt="Iva Kojić" width="900" height="900">
+      <div>
+        <p class="ime">Iva Kojić</p>
+        <p class="tag">AI za firme</p>
+      </div>
+    </a>
+    <a class="jezik" href="/en/companies/" lang="en">EN</a>
+  </header>
+
+  <section>
+    <p class="eyebrow">Korak 1 od 2</p>
+    <h1>3 pitanja o procesu koji želite da ubrzate.</h1>
+    <p class="lede">Odgovori stižu uz zakazani termin, pa razgovor počinje od vašeg procesa.</p>
+  </section>
+
+  <form class="panel" id="apply" novalidate
+        data-labels='["Ljudi u procesu","Sati nedeljno","Šta treba automatski"]'>
+    <div class="q">
+      <label for="q1"><span class="q-num">01</span>Koliko ljudi koristi ovaj proces?</label>
+      <input type="text" id="q1" name="q1" placeholder="npr. 6" inputmode="numeric">
+    </div>
+    <div class="q">
+      <label for="q2"><span class="q-num">02</span>Koliko sati nedeljno tim provede na njemu?</label>
+      <input type="text" id="q2" name="q2" placeholder="npr. 10 sati">
+    </div>
+    <div class="q">
+      <label for="q3"><span class="q-num">03</span>Šta želite da se dešava automatski ili uz manje ručnog rada?</label>
+      <textarea id="q3" name="q3" rows="3" placeholder="npr. nedeljni izveštaj klijentima"></textarea>
+    </div>
+    <p class="note" id="warn" hidden>Odgovorite na sva tri pitanja, pa se otvara kalendar.</p>
+    <button class="cta cta-copper cta-full" type="submit">Zakaži razgovor</button>
+  </form>
+
+  <section id="calendar-box" hidden>
+    <p class="eyebrow">Korak 2 od 2</p>
+    <h2 style="margin-bottom:1rem">Izaberite termin.</h2>
+    <div class="calendar">
+      <iframe id="calendar" title="Zakazivanje razgovora" loading="lazy"></iframe>
+    </div>
+    <p class="note" style="margin-top:.8rem">Kalendar se ne učitava?
+      <a id="calendar-link" href="https://calendly.com/ivakoj/1-1-session" target="_blank" rel="noopener">Otvorite ga u novom prozoru.</a></p>
+  </section>
+
+  <footer>
+    <a href="/companies/">Nazad</a>
+    <a href="/privacy/">Privatnost</a>
+  </footer>
+
+</div>
+<script src="/assets/apply.js"></script>
+</body>
+</html>

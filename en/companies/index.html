@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI systems for companies · Iva Kojić</title>
+<meta name="description" content="AI systems for the processes your team runs every day. We start with three questions.">
+<link rel="stylesheet" href="/assets/site.css">
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <a href="/en/about/">
+      <img class="portret" src="/media/iva.jpg" alt="Iva Kojić" width="900" height="900">
+      <div>
+        <p class="ime">Iva Kojić</p>
+        <p class="tag">AI for companies</p>
+      </div>
+    </a>
+    <a class="jezik" href="/companies/" lang="sr">SR</a>
+  </header>
+
+  <section>
+    <p class="eyebrow">For companies</p>
+    <h1>AI systems for the processes your team runs every day.</h1>
+    <p class="lede">We start with 3 questions about your team, your process and the time it takes.</p>
+  </section>
+
+  <ul class="proof">
+    <li><b>4,500</b><span>tasks and dependencies moved into one system, in a ten person agency</span></li>
+    <li><b>API</b><span>the system pulls data from the tools the team already uses, no copying by hand</span></li>
+    <li><b>100+</b><span>startups screened through an AI selection workflow I built</span></li>
+  </ul>
+
+  <section>
+    <h2>How it works</h2>
+    <ol class="steps" style="margin-top:1rem">
+      <li><div><b>A conversation</b><span>You talk, I listen to how the work actually moves and where it gets stuck.</span></div></li>
+      <li><div><b>A process map</b><span>We write down what lives in one person's head today: who does what, when and where.</span></div></li>
+      <li><div><b>A system on top of your tools</b><span>ClickUp, Google and the rest stay where they are. One simple screen reads from them.</span></div></li>
+      <li><div><b>Rollout with the team</b><span>A system works once the team uses it, so this is part of the build.</span></div></li>
+    </ol>
+  </section>
+
+  <form class="panel" id="apply" novalidate
+        data-labels='["People in the process","Hours per week","What should run automatically"]'>
+    <p class="eyebrow" style="margin:0">Step 1 of 2</p>
+    <div class="q">
+      <label for="q1"><span class="q-num">01</span>How many people use this process?</label>
+      <input type="text" id="q1" name="q1" placeholder="e.g. 6" inputmode="numeric">
+    </div>
+    <div class="q">
+      <label for="q2"><span class="q-num">02</span>How many hours a week does the team spend on it?</label>
+      <input type="text" id="q2" name="q2" placeholder="e.g. 10 hours">
+    </div>
+    <div class="q">
+      <label for="q3"><span class="q-num">03</span>What would you like to happen automatically, or with less manual work?</label>
+      <textarea id="q3" name="q3" rows="3" placeholder="e.g. the weekly client report"></textarea>
+    </div>
+    <p class="note" id="warn" hidden>Answer all three questions and the calendar opens.</p>
+    <button class="cta cta-copper cta-full" type="submit">Book a call</button>
+  </form>
+
+  <section id="calendar-box" hidden>
+    <p class="eyebrow">Step 2 of 2</p>
+    <h2 style="margin-bottom:1rem">Pick a time.</h2>
+    <div class="calendar">
+      <iframe id="calendar" title="Book a call" loading="lazy"></iframe>
+    </div>
+    <p class="note" style="margin-top:.8rem">Calendar not loading?
+      <a id="calendar-link" href="https://calendly.com/ivakoj/1-1-session" target="_blank" rel="noopener">Open it in a new window.</a></p>
+  </section>
+
+  <footer>
+    <a href="/en/about/">About</a>
+    <a href="/insights/">Insights</a>
+    <a href="/privacy/#en">Privacy</a>
+    <a href="/" lang="sr">Srpski</a>
+  </footer>
+
+</div>
+<script src="/assets/apply.js"></script>
+</body>
+</html>
